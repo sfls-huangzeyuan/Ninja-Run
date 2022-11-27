@@ -13,15 +13,15 @@
 #define Chang2 {Bwhat2=0;Bvx2=Bvy2=0;memset(Bgo2,0,sizeof(Bgo2));}
 #define Chang3 {Bwhat3=0;Bvx3=Bvy3=0;memset(Bgo3,0,sizeof(Bgo3));}
 using namespace std;
-int ti (float a)
+int Reserve_2 (float a)
 {
 	return ((int) (a * 10 + 5)) / 10;
 }
 void Setpos (float x, float y)
 {
 	COORD pos;
-	pos.X = ti (y * 4) / 2;
-	pos.Y = ti (x);
+	pos.X = Reserve_2 (y * 4) / 2;
+	pos.Y = Reserve_2 (x);
 	SetConsoleCursorPosition (GetStdHandle (STD_OUTPUT_HANDLE), pos);
 }
 void Color (int a)
@@ -72,7 +72,7 @@ void Color (int a)
 		SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE), FOREGROUND_GREEN | FOREGROUND_BLUE);
 }
 int Blomax, Ren, Exp, Expmax, Lvl, Ice, Drug, ar1, ar2, Tar1, Tar2, bl, br, Win, T, Tb, Sy, Up, Upt, Down, u1, u2, Kill, Killb, L, Ll[4], Li, D, Gd[10], Biao, Fire, Fir, Water, Thun, Wind, Magne, I[20][2], ib, Dis, Disb, Dis1, Disb1, Boss, Bblo, Bblomax, Bwhat1, Bwhat2, Bwhat3, Bgo1[10], Bgo2[10], Bgo3[10], Bbr, Bbl, Bl[4], Attack = 6, BloUp = 5, HuiUp = 5;
-float X, Y, Vx, Vy, Ding, Blo, Hui, Bx1, By1, Bx2, By2, Bx3, By3, Bvx1, Bvy1, Bvx2, Bvy2, Bvx3, Bvy3, Bway[1001][2];
+float X, Y, Vx, Vy, Ding, Blo, Blo_Refill, Bx1, By1, Bx2, By2, Bx3, By3, Bvx1, Bvy1, Bvx2, Bvy2, Bvx3, Bvy3, Bway[1001][2];
 struct bullet
 {
 	float x, y, vx, vy;
@@ -82,7 +82,7 @@ struct bullet
 	bool kill;
 } B[100001];
 void Map (int a, int b);
-void Pan (int a, float x, float y, int b)
+void Reserve (int a, float x, float y, int b)
 {
 	float Nox[4], Noy[4];
 	Nox[0] = X, Noy[0] = Y;
@@ -294,7 +294,7 @@ void Map (int a, int b)
 		{
 			if (Bwhat1 == 5)
 			{
-				if (ti (Bx1) == 20)Setpos (Bx1, By1), cout << "==";
+				if (Reserve_2 (Bx1) == 20)Setpos (Bx1, By1), cout << "==";
 				else Setpos (Bx1, By1), cout << "  ";
 			}
 			else
@@ -303,7 +303,7 @@ void Map (int a, int b)
 				Setpos (Bx1, By1 - 1), cout << "      ";
 				Setpos (Bx1 + 1, By1 - 0.5), cout << "    ";
 				
-				if (abs (ti (Bx1) - 20) <= 1)Setpos (20, By1 - 1), cout << "======";
+				if (abs (Reserve_2 (Bx1) - 20) <= 1)Setpos (20, By1 - 1), cout << "======";
 			}
 		}
 		
@@ -316,7 +316,7 @@ void Map (int a, int b)
 			Setpos (Bx2 + 1, By2 - 1), cout << "      ";
 			Color (0);
 			
-			if (abs (ti (Bx2) - 20) <= 1)Setpos (20, By2 - 1), cout << "======";
+			if (abs (Reserve_2 (Bx2) - 20) <= 1)Setpos (20, By2 - 1), cout << "======";
 		}
 		
 		if (Boss == 3 || Boss == 6)
@@ -328,7 +328,7 @@ void Map (int a, int b)
 			Setpos (Bx3 + 1, By3 - 1), cout << "      ";
 			Color (0);
 			
-			if (abs (ti (Bx3) - 20) <= 1)Setpos (20, By3 - 1), cout << "=======";
+			if (abs (Reserve_2 (Bx3) - 20) <= 1)Setpos (20, By3 - 1), cout << "=======";
 		}
 		
 		if (X < 0)return;
@@ -674,7 +674,7 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x, B[b].y - 1);
 			
-			if (ti (B[b].x) == 20)cout << "======";
+			if (Reserve_2 (B[b].x) == 20)cout << "======";
 			else cout << "      ";
 			
 			if (B[b].life != 0)
@@ -687,7 +687,7 @@ void Map (int a, int b)
 				
 				cout << "●";
 				
-				if (a == 1) Pan (1, B[b].x, B[b].y, b);
+				if (a == 1) Reserve (1, B[b].x, B[b].y, b);
 			}
 		}
 		
@@ -696,17 +696,17 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x - 1, B[b].y - 1);
 			
-			if (ti (B[b].x - 1) == 20)cout << "======";
+			if (Reserve_2 (B[b].x - 1) == 20)cout << "======";
 			else cout << "      ";
 			
 			Setpos (B[b].x, B[b].y - 1);
 			
-			if (ti (B[b].x) == 20)cout << "======";
+			if (Reserve_2 (B[b].x) == 20)cout << "======";
 			else cout << "      ";
 			
 			Setpos (B[b].x + 1, B[b].y - 1);
 			
-			if (ti (B[b].x + 1) == 20)cout << "======";
+			if (Reserve_2 (B[b].x + 1) == 20)cout << "======";
 			else cout << "      ";
 			
 			if (B[b].life != 0)
@@ -728,7 +728,7 @@ void Map (int a, int b)
 					Setpos (B[b].x + 1, B[b].y - 1), cout << "↙  ↘";
 				}
 				
-				if (a == 1) Pan (2, B[b].x, B[b].y, b);
+				if (a == 1) Reserve (2, B[b].x, B[b].y, b);
 			}
 		}
 		
@@ -737,7 +737,7 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x, B[b].y);
 			
-			if (ti (B[b].x) == 20)cout << "==";
+			if (Reserve_2 (B[b].x) == 20)cout << "==";
 			else cout << "  ";
 			
 			if (B[b].life != 0)
@@ -758,7 +758,7 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x, fmax ((float)0, B[b].y - 8));
 			
-			if (ti (B[b].x) == 20)
+			if (Reserve_2 (B[b].x) == 20)
 			{
 				for (int i = max (0, (int)B[b].y - 8); i <= B[b].y; i++)cout << "==";
 			}
@@ -775,7 +775,7 @@ void Map (int a, int b)
 				
 				for (int i = max (0, (int)B[b].y - 8); i <= B[b].y; i++)cout << "═";
 				
-				if (a == 1) Pan (4, B[b].x, B[b].y, b);
+				if (a == 1) Reserve (4, B[b].x, B[b].y, b);
 			}
 		}
 		
@@ -784,17 +784,17 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x - 1, B[b].y);
 			
-			if (ti (B[b].x) - 1 == 20)cout << "==";
+			if (Reserve_2 (B[b].x) - 1 == 20)cout << "==";
 			else cout << "  ";
 			
 			Setpos (B[b].x + 1, B[b].y);
 			
-			if (ti (B[b].x) + 1 == 20)cout << "==";
+			if (Reserve_2 (B[b].x) + 1 == 20)cout << "==";
 			else cout << "  ";
 			
 			Setpos (B[b].x, B[b].y - 1);
 			
-			if (ti (B[b].x) == 20)cout << "======";
+			if (Reserve_2 (B[b].x) == 20)cout << "======";
 			else cout << "      ";
 			
 			if (B[b].life != 0)
@@ -826,7 +826,7 @@ void Map (int a, int b)
 				if (B[b].How % 2 == 1) cout << "〔●〕";
 				else cout << "﹝○﹞";
 				
-				if (a == 1) Pan (6, B[b].x, B[b].y, b);
+				if (a == 1) Reserve (6, B[b].x, B[b].y, b);
 			}
 		}
 		
@@ -856,7 +856,7 @@ void Map (int a, int b)
 						Setpos (i, B[b].y);
 						cout << "║";
 						
-						if (a == 1) Pan (7, i, B[b].y, b);
+						if (a == 1) Reserve (7, i, B[b].y, b);
 					}
 					
 				if (B[b].How > 0) for (int i = 21; i <= 20 + B[b].How; i++)
@@ -864,7 +864,7 @@ void Map (int a, int b)
 						Setpos (i, B[b].y);
 						cout << "║";
 						
-						if (a == 1) Pan (7, i, B[b].y, b);
+						if (a == 1) Reserve (7, i, B[b].y, b);
 					}
 			}
 		}
@@ -874,7 +874,7 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x, B[b].y);
 			
-			if (ti (B[b].x) == 20)cout << "==";
+			if (Reserve_2 (B[b].x) == 20)cout << "==";
 			else cout << "  ";
 			
 			if (B[b].life != 0)
@@ -901,7 +901,7 @@ void Map (int a, int b)
 				if (B[b].t % 4 < 2)cout << "▃";
 				else cout << "▍";
 				
-				if (a == 1) Pan (B[b].what, B[b].x, B[b].y, b);
+				if (a == 1) Reserve (B[b].what, B[b].x, B[b].y, b);
 			}
 		}
 		
@@ -910,7 +910,7 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x, B[b].y);
 			
-			if (ti (B[b].x) == 20)cout << "====";
+			if (Reserve_2 (B[b].x) == 20)cout << "====";
 			else cout << "    ";
 			
 			if (B[b].life != 0)
@@ -936,7 +936,7 @@ void Map (int a, int b)
 				if (B[b].what == 17)cout << "X";
 			}
 			
-			if (a == 1) Pan (1, B[b].x, B[b].y, b);
+			if (a == 1) Reserve (1, B[b].x, B[b].y, b);
 		}
 		
 		if (B[b].what == 98 && B[b].life != 0)
@@ -944,7 +944,7 @@ void Map (int a, int b)
 			B[b].y -= B[b].vy;
 			Setpos (B[b].x, B[b].y);
 			
-			if (ti (B[b].x == 20))cout << "==";
+			if (Reserve_2 (B[b].x == 20))cout << "==";
 			else cout << "  ";
 			
 			if (B[b].y <= 3)B[b].life = 0;
@@ -1047,7 +1047,7 @@ void Map (int a, int b)
 					if (B[b].what % 8 == 7)cout << "猪";
 				}
 				
-				if (a == 1) Pan (1, B[b].x, B[b].y, b);
+				if (a == 1) Reserve (1, B[b].x, B[b].y, b);
 			}
 		}
 		
@@ -1056,7 +1056,7 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x, B[b].y);
 			
-			if (ti (B[b].x) == 20)cout << "==";
+			if (Reserve_2 (B[b].x) == 20)cout << "==";
 			else cout << "  ";
 			
 			if (Boss == 0) B[b].life = 0;
@@ -1083,17 +1083,17 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x - 1, B[b].y);
 			
-			if (ti (B[b].x) - 1 == 20)cout << "==";
+			if (Reserve_2 (B[b].x) - 1 == 20)cout << "==";
 			else cout << "  ";
 			
 			Setpos (B[b].x + 1, B[b].y);
 			
-			if (ti (B[b].x) + 1 == 20)cout << "==";
+			if (Reserve_2 (B[b].x) + 1 == 20)cout << "==";
 			else cout << "  ";
 			
 			Setpos (B[b].x, B[b].y - 1);
 			
-			if (ti (B[b].x) == 20)cout << "======";
+			if (Reserve_2 (B[b].x) == 20)cout << "======";
 			else cout << "      ";
 			
 			if (B[b].life != 0)
@@ -1155,7 +1155,7 @@ void Map (int a, int b)
 				
 				if (B[b].what == -9) cout << "﹝忍﹞";
 				
-				if (a == 1) Pan (-2, B[b].x, B[b].y, b);
+				if (a == 1) Reserve (-2, B[b].x, B[b].y, b);
 			}
 		}
 		
@@ -1164,7 +1164,7 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x, B[b].y);
 			
-			if (ti (B[b].x) == 20)cout << "==";
+			if (Reserve_2 (B[b].x) == 20)cout << "==";
 			else cout << "  ";
 			
 			if (B[b].life != 0)
@@ -1182,7 +1182,7 @@ void Map (int a, int b)
 				
 				cout << "◆";
 				
-				if (a == 1) Pan (-1, B[b].x, B[b].y, b);
+				if (a == 1) Reserve (-1, B[b].x, B[b].y, b);
 			}
 		}
 		
@@ -1191,7 +1191,7 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x, B[b].y - 0.5);
 			
-			if (ti (B[b].x) == 20)cout << "===";
+			if (Reserve_2 (B[b].x) == 20)cout << "===";
 			else cout << "   ";
 			
 			if (B[b].life != 0)
@@ -1453,7 +1453,7 @@ void Move()
 		}
 	}
 }
-void Guai (int R, int r)
+void Enemy_2 (int R, int r)
 {
 	if (R == -1)
 	{
@@ -1549,7 +1549,7 @@ void Guai (int R, int r)
 		B[br].life = 1;
 	}
 }
-void CpGuai (int R, float x, float y, float xx, float yy)
+void Enemy_1 (int R, float x, float y, float xx, float yy)
 {
 	if (R == 4)
 	{
@@ -1573,7 +1573,7 @@ void CpGuai (int R, float x, float y, float xx, float yy)
 		B[br].life = 1;
 	}
 }
-void MesGuai (int a, int rr)
+void Enemy_Upgraded (int a, int rr)
 {
 	int R = rand() % rr, r = -10086;
 	
@@ -1587,34 +1587,34 @@ void MesGuai (int a, int rr)
 		
 		if (a == 5) r = 2 + rand() % 4;
 		
-		if (r != -10086) Guai (a, r);
+		if (r != -10086) Enemy_2 (a, r);
 	}
 }
-void NorGuai (int a, int b)
+void Enemy_Normal (int a, int b)
 {
 	if (a == 1)
 	{
-		if (b == 1 || b == 41) Guai (0, 15), Guai (0, 17), Guai (0, 19);
+		if (b == 1 || b == 41) Enemy_2 (0, 15), Enemy_2 (0, 17), Enemy_2 (0, 19);
 		
-		if (b == 21 || b == 61) Guai (0, 21), Guai (0, 23), Guai (0, 25);
+		if (b == 21 || b == 61) Enemy_2 (0, 21), Enemy_2 (0, 23), Enemy_2 (0, 25);
 		
-		if (b == 81) Guai (0, 11), Guai (0, 13), Guai (0, 15), Guai (0, 17), Guai (0, 19);
+		if (b == 81) Enemy_2 (0, 11), Enemy_2 (0, 13), Enemy_2 (0, 15), Enemy_2 (0, 17), Enemy_2 (0, 19);
 		
-		if (b == 101 || b == 141) Guai (0, 17), Guai (0, 19), Guai (0, 21), Guai (0, 23), Guai (0, 25);
+		if (b == 101 || b == 141) Enemy_2 (0, 17), Enemy_2 (0, 19), Enemy_2 (0, 21), Enemy_2 (0, 23), Enemy_2 (0, 25);
 		
-		if (b == 121) Guai (0, 15), Guai (0, 17), Guai (0, 19), Guai (0, 21), Guai (0, 23);
+		if (b == 121) Enemy_2 (0, 15), Enemy_2 (0, 17), Enemy_2 (0, 19), Enemy_2 (0, 21), Enemy_2 (0, 23);
 		
-		if (b >= 160 && b <= 260 && b % 10 == 0) Guai (0, b / 10 - 1);
+		if (b >= 160 && b <= 260 && b % 10 == 0) Enemy_2 (0, b / 10 - 1);
 		
-		if (b >= 270 && b <= 370 && b % 10 == 0) Guai (0, 52 - b / 10);
+		if (b >= 270 && b <= 370 && b % 10 == 0) Enemy_2 (0, 52 - b / 10);
 		
-		if (b >= 460 && b <= 560 && b % 10 == 0) Guai (0, b / 10 - 37), Guai (0, b / 10 - 36), Guai (0, b / 10 - 35);
+		if (b >= 460 && b <= 560 && b % 10 == 0) Enemy_2 (0, b / 10 - 37), Enemy_2 (0, b / 10 - 36), Enemy_2 (0, b / 10 - 35);
 		
-		if (b >= 570 && b <= 670 && b % 10 == 0) Guai (0, 78 - b / 10), Guai (0, 77 - b / 10), Guai (0, 76 - b / 10);
+		if (b >= 570 && b <= 670 && b % 10 == 0) Enemy_2 (0, 78 - b / 10), Enemy_2 (0, 77 - b / 10), Enemy_2 (0, 76 - b / 10);
 		
-		if (b >= 760 && b <= 960 && b % 10 == 0) Guai (0, b / 10 - 66), Guai (0, b / 10 - 65), Guai (0, 103 - b / 10), Guai (0, 104 - b / 10);
+		if (b >= 760 && b <= 960 && b % 10 == 0) Enemy_2 (0, b / 10 - 66), Enemy_2 (0, b / 10 - 65), Enemy_2 (0, 103 - b / 10), Enemy_2 (0, 104 - b / 10);
 		
-		if (b >= 1000 && b <= 1300) MesGuai (0, 30 - b / 50);
+		if (b >= 1000 && b <= 1300) Enemy_Upgraded (0, 30 - b / 50);
 	}
 	
 	if (a == 2)
@@ -1625,69 +1625,69 @@ void NorGuai (int a, int b)
 			
 			if (r == 1) r = 0;
 			
-			for (int i = 0; i < 4; i++) if (i != r) Guai (1, i * 4 + 9);
+			for (int i = 0; i < 4; i++) if (i != r) Enemy_2 (1, i * 4 + 9);
 		}
 		
-		if (b > 200 && b <= 220 && b % 5 == 1) Guai (1, 18);
+		if (b > 200 && b <= 220 && b % 5 == 1) Enemy_2 (1, 18);
 		
-		if (b > 220 && b <= 300 && b % 7 == 1) Guai (1, b / 5 - 26);
+		if (b > 220 && b <= 300 && b % 7 == 1) Enemy_2 (1, b / 5 - 26);
 		
-		if (b > 350 && b <= 370 && b % 5 == 1) Guai (1, 22);
+		if (b > 350 && b <= 370 && b % 5 == 1) Enemy_2 (1, 22);
 		
-		if (b > 370 && b <= 450 && b % 7 == 1) Guai (1, 96 - b / 5);
+		if (b > 370 && b <= 450 && b % 7 == 1) Enemy_2 (1, 96 - b / 5);
 		
-		if (b == 461 || b == 501 || b == 541) Guai (1, 13), Guai (1, 17), Guai (1, 21);
+		if (b == 461 || b == 501 || b == 541) Enemy_2 (1, 13), Enemy_2 (1, 17), Enemy_2 (1, 21);
 		
-		if (b == 481 || b == 521 || b == 561) Guai (1, 17), Guai (1, 21), Guai (1, 25);
+		if (b == 481 || b == 521 || b == 561) Enemy_2 (1, 17), Enemy_2 (1, 21), Enemy_2 (1, 25);
 		
-		if (b >= 561 && b <= 861 && b % 20 == 1) Guai (1, b / 40 + 5);
+		if (b >= 561 && b <= 861 && b % 20 == 1) Enemy_2 (1, b / 40 + 5);
 		
-		if (b >= 561 && b <= 861 && b % 20 == 11) Guai (1, 35 - b / 40);
+		if (b >= 561 && b <= 861 && b % 20 == 11) Enemy_2 (1, 35 - b / 40);
 		
-		if (b >= 801 && b <= 961 && b % 15 == 1) Guai (1, 20);
+		if (b >= 801 && b <= 961 && b % 15 == 1) Enemy_2 (1, 20);
 		
-		if (b >= 1000 && b <= 1300) MesGuai (1, 30 - b / 50);
+		if (b >= 1000 && b <= 1300) Enemy_Upgraded (1, 30 - b / 50);
 	}
 	
 	if (a == 3)
 	{
-		if (b == 1 || b == 61) Guai (3, 15), Guai (2, 17), Guai (2, 19);
+		if (b == 1 || b == 61) Enemy_2 (3, 15), Enemy_2 (2, 17), Enemy_2 (2, 19);
 		
-		if (b == 31 || b == 91) Guai (2, 21), Guai (2, 23), Guai (3, 25);
+		if (b == 31 || b == 91) Enemy_2 (2, 21), Enemy_2 (2, 23), Enemy_2 (3, 25);
 		
-		if (b >= 120 && b <= 220 && b % 10 == 0) Guai (2, b / 10 + 3);
+		if (b >= 120 && b <= 220 && b % 10 == 0) Enemy_2 (2, b / 10 + 3);
 		
-		if (b >= 240 && b <= 340 && b % 10 == 0) Guai (2, 49 - b / 10);
+		if (b >= 240 && b <= 340 && b % 10 == 0) Enemy_2 (2, 49 - b / 10);
 		
-		if (b >= 360 && b <= 460 && b % 20 == 0) Guai (2, b / 10 - 21), Guai (2, 61 - b / 10);
+		if (b >= 360 && b <= 460 && b % 20 == 0) Enemy_2 (2, b / 10 - 21), Enemy_2 (2, 61 - b / 10);
 		
-		if (b >= 480 && b <= 580 && b % 20 == 0) Guai (3, b / 10 - 33), Guai (3, 73 - b / 10);
+		if (b >= 480 && b <= 580 && b % 20 == 0) Enemy_2 (3, b / 10 - 33), Enemy_2 (3, 73 - b / 10);
 		
 		if (b >= 600 && b < 750 && b % 30 == 0)
 		{
-			for (int i = 0; i < 5; i++) Guai (3, i * 3 + 10);
+			for (int i = 0; i < 5; i++) Enemy_2 (3, i * 3 + 10);
 		}
 		
-		if (b >= 750 && b < 830 && b % 10 == 0) if (b <= 200 && b % 40 == 1) Guai (2, X);
+		if (b >= 750 && b < 830 && b % 10 == 0) if (b <= 200 && b % 40 == 1) Enemy_2 (2, X);
 		
-		if (b >= 830 && b < 910 && b % 20 == 0) Guai (2, X);
+		if (b >= 830 && b < 910 && b % 20 == 0) Enemy_2 (2, X);
 		
-		if (b >= 910 && b < 980 && b % 10 == 0) Guai (2, X);
+		if (b >= 910 && b < 980 && b % 10 == 0) Enemy_2 (2, X);
 		
-		if (b >= 1000 && b <= 1300) MesGuai (rand() % 2 + 2, 40 - b / 50);
+		if (b >= 1000 && b <= 1300) Enemy_Upgraded (rand() % 2 + 2, 40 - b / 50);
 	}
 	
 	if (a == 4)
 	{
-		if (b == 1) CpGuai (4, 10, 29, -0.4, 0.7), CpGuai (4, 14, 29, -0.2, 0.7), CpGuai (4, 21, 29, 0, 0.65);
+		if (b == 1) Enemy_1 (4, 10, 29, -0.4, 0.7), Enemy_1 (4, 14, 29, -0.2, 0.7), Enemy_1 (4, 21, 29, 0, 0.65);
 		
-		if (b == 41) CpGuai (4, 10, 29, -0.2, 0.7), CpGuai (4, 14, 29, -0.1, 0.7), CpGuai (4, 18, 29, 0, 0.65);
+		if (b == 41) Enemy_1 (4, 10, 29, -0.2, 0.7), Enemy_1 (4, 14, 29, -0.1, 0.7), Enemy_1 (4, 18, 29, 0, 0.65);
 		
-		if (b == 81) CpGuai (4, 5, 20, -0.4, 0.35), CpGuai (4, 10, 29, -0.4, 0.7), CpGuai (4, 14, 29, -0.2, 0.7), CpGuai (4, 30, 20, 0.25, 0.4), CpGuai (4, 21, 29, 0, 0.65);
+		if (b == 81) Enemy_1 (4, 5, 20, -0.4, 0.35), Enemy_1 (4, 10, 29, -0.4, 0.7), Enemy_1 (4, 14, 29, -0.2, 0.7), Enemy_1 (4, 30, 20, 0.25, 0.4), Enemy_1 (4, 21, 29, 0, 0.65);
 		
-		if (b == 121) CpGuai (4, 5, 20, -0.2, 0.35), CpGuai (4, 10, 29, -0.2, 0.7), CpGuai (4, 14, 29, -0.1, 0.7), CpGuai (4, 30, 20, 0.4, 0.4), CpGuai (4, 18, 29, 0, 0.65);
+		if (b == 121) Enemy_1 (4, 5, 20, -0.2, 0.35), Enemy_1 (4, 10, 29, -0.2, 0.7), Enemy_1 (4, 14, 29, -0.1, 0.7), Enemy_1 (4, 30, 20, 0.4, 0.4), Enemy_1 (4, 18, 29, 0, 0.65);
 		
-		if (b == 161) CpGuai (4, 10, 29, -0.4, 0.7), CpGuai (4, 14, 29, -0.2, 0.7), CpGuai (4, 21, 29, 0, 0.6), CpGuai (4, 10, 29, -0.2, 0.7), CpGuai (4, 14, 29, -0.1, 0.7), CpGuai (4, 18, 29, 0, 0.65);
+		if (b == 161) Enemy_1 (4, 10, 29, -0.4, 0.7), Enemy_1 (4, 14, 29, -0.2, 0.7), Enemy_1 (4, 21, 29, 0, 0.6), Enemy_1 (4, 10, 29, -0.2, 0.7), Enemy_1 (4, 14, 29, -0.1, 0.7), Enemy_1 (4, 18, 29, 0, 0.65);
 		
 		if (b >= 200 && b <= 500 && b % 40 == 1)
 		{
@@ -1701,17 +1701,17 @@ void NorGuai (int a, int b)
 				if (rr == r)goto X5;
 				
 				r = rr;
-				CpGuai (4, i * 3 + 7, 29, 0, 0.5 + (rand() % 50) / 80.0);
+				Enemy_1 (4, i * 3 + 7, 29, 0, 0.5 + (rand() % 50) / 80.0);
 			}
 		}
 		
-		if (b > 540 && b <= 565 && b % 5 == 1) CpGuai (4, 5, 8, -2, 0.2);
+		if (b > 540 && b <= 565 && b % 5 == 1) Enemy_1 (4, 5, 8, -2, 0.2);
 		
-		if (b > 590 && b <= 615 && b % 5 == 1) CpGuai (4, 30, 8, 1.5, 0.2);
+		if (b > 590 && b <= 615 && b % 5 == 1) Enemy_1 (4, 30, 8, 1.5, 0.2);
 		
-		if (b > 640 && b <= 665 && b % 5 == 1) CpGuai (4, 5, 8, -1.5, 0.3);
+		if (b > 640 && b <= 665 && b % 5 == 1) Enemy_1 (4, 5, 8, -1.5, 0.3);
 		
-		if (b > 690 && b <= 715 && b % 5 == 1) CpGuai (4, 30, 8, 2, 0.3);
+		if (b > 690 && b <= 715 && b % 5 == 1) Enemy_1 (4, 30, 8, 2, 0.3);
 		
 		if (b >= 750 && b <= 950 && b % 20 == 1)
 		{
@@ -1725,11 +1725,11 @@ void NorGuai (int a, int b)
 				if (rr == r)goto X6;
 				
 				r = rr;
-				CpGuai (4, i * 5 + 7 + (rand() % 3), 29, 0, 0.5 + (rand() % 50) / 200.0);
+				Enemy_1 (4, i * 5 + 7 + (rand() % 3), 29, 0, 0.5 + (rand() % 50) / 200.0);
 			}
 		}
 		
-		if (b >= 1000 && b <= 1300) MesGuai (4, 5);
+		if (b >= 1000 && b <= 1300) Enemy_Upgraded (4, 5);
 	}
 }
 void RandGood()
@@ -1737,7 +1737,7 @@ void RandGood()
 	if (Biao > 0)
 	{
 		Biao--;
-		Guai (-1, 0);
+		Enemy_2 (-1, 0);
 	}
 	
 	if (Gd[1] == 0)
@@ -1750,24 +1750,24 @@ void RandGood()
 	}
 	else if (Gd[1] <= 5)
 	{
-		Guai (-2 - Gd[1], Gd[3]);
+		Enemy_2 (-2 - Gd[1], Gd[3]);
 		memset (Gd, 0, sizeof (Gd));
 	}
 	else if (Gd[1] >= 20 && Gd[1] < 27)
 	{
-		Guai (-8, Gd[3]);
+		Enemy_2 (-8, Gd[3]);
 		memset (Gd, 0, sizeof (Gd));
 	}
 	else if (Gd[1] >= 30 && Gd[1] < 37)
 	{
-		Guai (-9, Gd[3]);
+		Enemy_2 (-9, Gd[3]);
 		memset (Gd, 0, sizeof (Gd));
 	}
 	else if (Gd[1] >= 40 && Gd[1] < 70)
 	{
 		Gd[2]++;
 		
-		if (Gd[2] % 2 == 1)Guai (-10, Gd[3]);
+		if (Gd[2] % 2 == 1)Enemy_2 (-10, Gd[3]);
 		
 		if (Gd[2] >= 9)memset (Gd, 0, sizeof (Gd));
 	}
@@ -1775,13 +1775,13 @@ void RandGood()
 	{
 		Gd[2]++;
 		
-		if (Gd[2] % 2 == 1)Guai (-11, Gd[3]);
+		if (Gd[2] % 2 == 1)Enemy_2 (-11, Gd[3]);
 		
 		if (Gd[2] >= 9)memset (Gd, 0, sizeof (Gd));
 	}
 	else if (Boss != 0 && Gd[1] >= 450 && Gd[1] <= 500)
 	{
-		Guai (-2, Gd[3]);
+		Enemy_2 (-2, Gd[3]);
 		memset (Gd, 0, sizeof (Gd));
 	}
 	else Gd[1] = 0;
@@ -1804,7 +1804,7 @@ void RandGood()
 		Color (0);
 	}
 }
-void Panboss (int bx, int by)
+void Attack_Boss (int bx, int by)
 {
 	float Nox[4], Noy[4];
 	Nox[0] = X, Noy[0] = Y;
@@ -2031,7 +2031,7 @@ void Boss1()
 				
 				if (bx <= 5 || bx >= 30 || by < 0 || by >= 29) break;
 				
-				Panboss (bx, by);
+				Attack_Boss (bx, by);
 				Setpos (bx, by), cout << "█";
 				Bbl++;
 				Bway[Bbl][0] = bx;
@@ -2229,7 +2229,7 @@ void Boss2()
 						if (bx <= 5 || bx >= 30 || by < 0 || by >= 30)
 							continue;
 							
-						Panboss (bx, by);
+						Attack_Boss (bx, by);
 						Setpos (bx, by), cout << "█";
 						Bbl++;
 						Bway[Bbl][0] = bx;
@@ -2299,7 +2299,7 @@ void Boss2()
 				{
 					Setpos (i, Bgo2[5]), cout << "█";
 					Bbl++;
-					Panboss (i, Bgo2[5]);
+					Attack_Boss (i, Bgo2[5]);
 					Bway[Bbl][0] = i;
 					Bway[Bbl][1] = Bgo2[5];
 				}
@@ -2313,7 +2313,7 @@ void Boss2()
 				{
 					Setpos (Bgo2[4], i), cout << "█";
 					Bbl++;
-					Panboss (Bgo2[4], i);
+					Attack_Boss (Bgo2[4], i);
 					Bway[Bbl][0] = Bgo2[4];
 					Bway[Bbl][1] = i;
 				}
@@ -2337,7 +2337,7 @@ void Boss2()
 			
 			if (Boss == 6) t /= 2.0;
 			
-			CpGuai (Bwhat2 + 2, Bx2, By2, (Bx2 - X) / t * 1.0 + (t - 1)*g / 2.0, 1);
+			Enemy_1 (Bwhat2 + 2, Bx2, By2, (Bx2 - X) / t * 1.0 + (t - 1)*g / 2.0, 1);
 		}
 		
 		if (Bgo2[1] > 20) Chang2
@@ -2755,7 +2755,7 @@ void ChangeData()
 		cout << "2.初始血量:\t\t" << Blo << "\t" << (n == 2 ? "*" : " ")  << endl;
 		cout << "3.升级经验量:\t\t" << Expmax  << "\t" << (n == 3 ? "*" : " ") << endl;
 		cout << "4.血量回复加成:\t\t" << HuiUp << "\t" << (n == 4 ? "*" : " ") <<  endl;
-		cout << "5.初始血量回复:\t\t" << Hui << "\t" << (n == 5 ? "*" : " ")  << endl;
+		cout << "5.初始血量回复:\t\t" << Blo_Refill << "\t" << (n == 5 ? "*" : " ")  << endl;
 		cout << "6.攻击加成:\t\t" << Attack << "\t" << (n == 6 ? "*" : " ")  << endl;
 		cout << "7.血量加成:\t\t" << BloUp << "\t" << (n == 7 ? "*" : " ")  << endl;
 		cout << "按下Tab修改,w和s切换,Esc退出" << endl;
@@ -2780,7 +2780,7 @@ void ChangeData()
 			else if (n == 4)
 				HuiUp = tmp;
 			else if (n == 5)
-				Hui = tmp;
+				Blo_Refill = tmp;
 			else if (n == 6)
 				Attack = tmp;
 			else if (n == 7)
@@ -2806,7 +2806,7 @@ int main()
 	Lvl = 1;
 	Blo = Blomax = 250;
 	Expmax = 300;
-	Hui = 15;
+	Blo_Refill = 15;
 	X = 18, Y = 6;
 	cout << "\
 	───╔═╗─╔╗─────────────╔═══╗─────────\n\
@@ -2974,9 +2974,32 @@ Start:
 			if (g == ' ')
 			{
 				Sleep (100);
-				Setpos (4, 1);
+				Setpos (30, 1);
 				Sy++;
-				system ("pause");
+				cout << "状态栏:\n";
+				
+				if (Ren)
+					cout << "\t忍术:缓慢回复血量\n";
+					
+				if (Thun)
+					cout << "\t雷盾:一段时间无敌\n";
+					
+				if (Water)
+					cout << "\t水遁:清除前方障碍\n";
+					
+				if (Fire)
+					cout << "\t火阵:自动攻击敌人\n";
+					
+				if (Magne)
+					cout << "\t磁铁:自动收集经验\n";
+					
+				Setpos (4, 1);
+				cout << "↑/↓ 跳跃/下翻，←→ 些微移动（松手即返回）";
+				Setpos (6, 1);
+				cout << "球可以开启特殊效果，经验积满可提升级别。";
+				Setpos (8, 1);
+				cout << "打败 7 波即胜利，打败 BOSS 有新天赋。";
+				_getch();
 			}
 			else if (g == 'c')
 			{
@@ -2988,7 +3011,7 @@ Start:
 		
 		if (Sy == 1) Setpos (4, 1), printf ("                           "), Sy--;
 		
-		if (Drug == 0) Blo = fmin ((float)Blomax, Blo + Hui / 100.0);
+		if (Drug == 0) Blo = fmin ((float)Blomax, Blo + Blo_Refill / 100.0);
 		else if (T % 10 == 0)Blo--;
 		
 		if (Killb > 0) Killb--;
@@ -3009,7 +3032,7 @@ Start:
 		
 		if (Thun > 0) Ball (4), Thun--;
 		
-		if (Boss == 0) NorGuai (L, T % 1500);
+		if (Boss == 0) Enemy_Normal (L, T % 1500);
 		
 		RandGood();
 		
@@ -3024,15 +3047,9 @@ Start:
 			
 			for (int i = 1; i <= 60; i++) printf ("=");
 			
-			if (Win == 0 && T < 300)
+			if (Win == 0)
 			{
 				Setpos (4, 6);
-				cout << "↑/↓ 跳跃/下翻，←→ 些微移动（松手即返回）";
-				Setpos (8, 6);
-				cout << "球可以开启特殊效果，经验积满（300）可提升级别。";
-				Setpos (8, 6);
-				cout << "打败 7 波即胜利，打败 BOSS 有新天赋。";
-				Setpos (10, 15);
 				cout << "空格可以暂停。";
 			}
 		}
@@ -3061,7 +3078,7 @@ Start:
 		
 		if (!Endless) Exp = min (Exp, Expmax);
 		
-		if (Exp >= Expmax)Exp = 0, Lvl++, Hui += HuiUp, Blomax += BloUp;
+		if (Exp >= Expmax)Exp = 0, Lvl++, Blo_Refill += HuiUp, Blomax += BloUp;
 		
 		if (Lvl > 0)Color (5);
 		
