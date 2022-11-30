@@ -2750,6 +2750,7 @@ void ChangeData()
 	
 	while (true)
 	{
+		system("cls");
 		cout << "数据编辑器\n";
 		cout << "1.初始血量上限:\t\t" << Blomax << "\t" << (n == 1 ? "*" : " ")  << endl;
 		cout << "2.初始血量:\t\t" << Blo << "\t" << (n == 2 ? "*" : " ")  << endl;
@@ -2818,7 +2819,6 @@ int main()
 	────────────╔═╝║────────────────────\n\
 	────────────╚══╝────────────────────\n";
 	cout << "\n\n\t\t Press to Start" << endl;
-	bool Endless;
 	char c;
 	c = getch();
 	
@@ -2871,7 +2871,6 @@ Start:
 		Sleep (20);
 		system ("color 0F");
 		Map (0, 1);
-		Sleep (1000);
 	}
 	
 	if (Win % 2 == 1)
@@ -2982,28 +2981,28 @@ Start:
 					cout << "\t忍术:缓慢回复血量\n";
 					
 				if (Thun)
-					cout << "\t雷盾:一段时间无敌\n";
+					cout << "\t雷盾:一段时间无敌\t剩余时间"<<Thun<<endl;
 					
 				if (Water)
-					cout << "\t水遁:清除前方障碍\n";
+					cout << "\t水遁:清除前方障碍\t剩余时间"<<Water<<endl;
 					
 				if (Fire)
-					cout << "\t火阵:自动攻击敌人\n";
+					cout << "\t火阵:自动攻击敌人\t剩余时间"<<Fire<<endl;
 					
 				if (Magne)
-					cout << "\t磁铁:自动收集经验\n";
+					cout << "\t磁铁:自动收集经验\t剩余时间"<<Magne<<endl;
 					
 				Setpos (4, 1);
 				cout << "↑/↓ 跳跃/下翻，←→ 些微移动（松手即返回）";
-				Setpos (6, 1);
+				Setpos (5, 1);
 				cout << "球可以开启特殊效果，经验积满可提升级别。";
-				Setpos (8, 1);
+				Setpos (6, 1);
 				cout << "打败 7 波即胜利，打败 BOSS 有新天赋。";
 				_getch();
+				system("cls");
 			}
 			else if (g == 'c')
 			{
-				Sleep (100);
 				system ("cls");
 				ChangeData();
 			}
@@ -3049,7 +3048,7 @@ Start:
 			
 			if (Win == 0)
 			{
-				Setpos (4, 6);
+				Setpos (4, 1);
 				cout << "空格可以暂停。";
 			}
 		}
@@ -3076,7 +3075,7 @@ Start:
 		Setpos (1, 9), cout << "攻击: " << 16 + Lvl* Attack << "  ";
 		Setpos (2, 1);
 		
-		if (!Endless) Exp = min (Exp, Expmax);
+		Exp = min (Exp, Expmax);
 		
 		if (Exp >= Expmax)Exp = 0, Lvl++, Blo_Refill += HuiUp, Blomax += BloUp;
 		
@@ -3140,18 +3139,14 @@ Start:
 	
 	if (Blo <= 0)
 	{
-		if (!Endless)
-		{
-			Sleep (1000);
-			D++;
-			system ("color 7F");
-			Setpos (15, 11);
-			Color (4);
-			cout << "GAME OVER...";
-			Sleep (2000);
-			goto ReStart;
-		}
-		else Blo = Blomax;
+		Sleep (1000);
+		D++;
+		system ("color 7F");
+		Setpos (15, 11);
+		Color (4);
+		cout << "GAME OVER...";
+		goto ReStart;
+		Blo = Blomax;
 	}
 	else if (Win == 6)
 	{
@@ -3159,7 +3154,6 @@ Start:
 		Setpos (15, 11);
 		Color (4);
 		cout << "坚持30秒 !";
-		Sleep (2000);
 		Setpos (30, 0);
 		Win++;
 		D = 0;
@@ -3171,7 +3165,6 @@ Start:
 		Setpos (15, 11);
 		Color (5);
 		cout << "YOU WIN !";
-		Sleep (2000);
 		Setpos (30, 0);
 		return 0;
 	}
