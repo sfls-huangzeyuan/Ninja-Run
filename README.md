@@ -18,5 +18,6 @@ If you wanna write your own plugin , copy the [main.cpp](https://github.com/sfls
 3.  A New Story Line **->Writing**
 4.  Open World **->Writing**
 ### File Size
-ninga.exe:3,268,608 Bytes=3.11 Megabytes
-main.cpp:72,728 Bytes=3164 Lines=7.20 Kilobytes
+ninga.exe:3,268,608 Bytes=**3.11 Megabytes**
+</br>
+main.cpp:72,728 Bytes=3164 Lines=**7.20 Kilobytes**
