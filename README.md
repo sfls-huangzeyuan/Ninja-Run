@@ -20,6 +20,7 @@ If you wanna write your own plugin , copy the [main.cpp](https://github.com/sfls
 4.  Open World **->Writing**
 ### File Size
 ninga.exe:2,035,712 Bytes=**1.94 Megabytes**
+</br>
 main.cpp:74,194 Bytes=3178 Lines=**7.24 Kilobytes**
 ### Changelog
 1. **Removed:** 'E' key cheat on Starting Page as Data Reviser can replace it at all
