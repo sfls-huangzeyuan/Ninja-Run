@@ -23,9 +23,9 @@ ninga.exe:2,035,712 Bytes=**1.94 Megabytes**
 main.cpp:74,194 Bytes=3178 Lines=**7.24 Kilobytes**
 ### Changelog
 1. **Removed:** 'E' key cheat on Starting Page as Data Reviser can replace it at all
-2. **Fixed:**The game will collapse on the final page as you have passed the 7th Boss
-3. **Fixed:**Some printing error
-4. **Slight Change:**Re-Builded the Binary File(.exe) and reduced the space from 3.11MB to 1.94MB
+2. **Fixed:** The game will collapse on the final page as you have passed the 7th Boss
+3. **Fixed:** Some printing error
+4. **Slight Change:** Re-Builded the Binary File(.exe) and reduced the space from 3.11MB to 1.94MB
 ---
 ## Version 1.0.12-beta-5 , patch number 1281
 ### Done Ideas
