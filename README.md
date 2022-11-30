@@ -4,8 +4,7 @@
 ### Use
 If you just want to try it , view in [release](https://github.com/sfls-huangzeyuan/Ninga-Run/releases/tag/Ver1.2-beta) to get its .exe form.
 If you wanna write your own plugin , copy the [main.cpp](https://github.com/sfls-huangzeyuan/Ninga-Run/blob/main/main.cpp) and use [MinGW](https://sourceforge.net/projects/mingw/) to compile it.
-<iframe src="www.baidu.com">
-</iframe>
+
 ---
 ## Version 1.2.13-beta-17 , patch number 1519
 ### Done Ideas
