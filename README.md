@@ -1,4 +1,4 @@
-# This is a simple text-based Ninga-Run game.
+# This is a simple text-based Ninja-Run game.
 ## We are now requesting for English translation.
 
 ### Use
