@@ -1,4 +1,5 @@
 # This is a simple text-based Ninja-Run game.
+![C++:100%](https://img.shields.io/github/languages/top/sfls-huangzeyuan/Ninja-Run?color=red&label=C%2B%2B&logo=C%2B%2B&logoColor=lightblue)
 ## We are now requesting for English translation.
 
 ### Use
