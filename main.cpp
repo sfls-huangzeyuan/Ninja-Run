@@ -13,15 +13,15 @@
 #define Chang2 {Bwhat2=0;Bvx2=Bvy2=0;memset(Bgo2,0,sizeof(Bgo2));}
 #define Chang3 {Bwhat3=0;Bvx3=Bvy3=0;memset(Bgo3,0,sizeof(Bgo3));}
 using namespace std;
-int Reserve_2 (float a)
+int Calculate (float a)
 {
 	return ((int) (a * 10 + 5)) / 10;
 }
 void Setpos (float x, float y)
 {
 	COORD pos;
-	pos.X = Reserve_2 (y * 4) / 2;
-	pos.Y = Reserve_2 (x);
+	pos.X = Calculate (y * 4) / 2;
+	pos.Y = Calculate (x);
 	SetConsoleCursorPosition (GetStdHandle (STD_OUTPUT_HANDLE), pos);
 }
 void Color (int a)
@@ -71,7 +71,7 @@ void Color (int a)
 	if (a == 14)
 		SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE), FOREGROUND_GREEN | FOREGROUND_BLUE);
 }
-int Blomax, Ren, Exp, Expmax, Lvl, Ice, Drug, ar1, ar2, Tar1, Tar2, bl, br, Win, T, Tb, Sy, Up, Upt, Down, u1, u2, Kill, Killb, L, Ll[4], Li, D, Gd[10], Biao, Fire, Fir, Water, Thun, Wind, Magne, I[20][2], ib, Dis, Disb, Dis1, Disb1, Boss, Bblo, Bblomax, Bwhat1, Bwhat2, Bwhat3, Bgo1[10], Bgo2[10], Bgo3[10], Bbr, Bbl, Bl[4], Attack = 6, BloUp = 5, HuiUp = 5;
+int Blomax, Ren, Exp, Expmax, Lvl, Ice, Drug, ar1, ar2, Tar1, Tar2, bl, br, Win, T, Tb, Sy, Up, Upt, Down, u1, u2, Kill, Killb, L, Ll[4], Li, D, Gd[10], Biao, Fire, Fir, Water, Thun, Wind, Magne, I[20][2], ib, Dis, Disb, Dis1, Disb1, Boss, Bblo, Bblomax, Bwhat1, Bwhat2, Bwhat3, Bgo1[10], Bgo2[10], Bgo3[10], Bbr, Bbl, Bl[4], Attack = 6, BloUp = 5, BloodRefillUp = 5, UnDeadLast = 1;
 float X, Y, Vx, Vy, Ding, Blo, Blo_Refill, Bx1, By1, Bx2, By2, Bx3, By3, Bvx1, Bvy1, Bvx2, Bvy2, Bvx3, Bvy3, Bway[1001][2];
 struct bullet
 {
@@ -294,7 +294,7 @@ void Map (int a, int b)
 		{
 			if (Bwhat1 == 5)
 			{
-				if (Reserve_2 (Bx1) == 20)Setpos (Bx1, By1), cout << "==";
+				if (Calculate (Bx1) == 20)Setpos (Bx1, By1), cout << "==";
 				else Setpos (Bx1, By1), cout << "  ";
 			}
 			else
@@ -303,7 +303,7 @@ void Map (int a, int b)
 				Setpos (Bx1, By1 - 1), cout << "      ";
 				Setpos (Bx1 + 1, By1 - 0.5), cout << "    ";
 				
-				if (abs (Reserve_2 (Bx1) - 20) <= 1)Setpos (20, By1 - 1), cout << "======";
+				if (abs (Calculate (Bx1) - 20) <= 1)Setpos (20, By1 - 1), cout << "======";
 			}
 		}
 		
@@ -316,7 +316,7 @@ void Map (int a, int b)
 			Setpos (Bx2 + 1, By2 - 1), cout << "      ";
 			Color (0);
 			
-			if (abs (Reserve_2 (Bx2) - 20) <= 1)Setpos (20, By2 - 1), cout << "======";
+			if (abs (Calculate (Bx2) - 20) <= 1)Setpos (20, By2 - 1), cout << "======";
 		}
 		
 		if (Boss == 3 || Boss == 6)
@@ -328,7 +328,7 @@ void Map (int a, int b)
 			Setpos (Bx3 + 1, By3 - 1), cout << "      ";
 			Color (0);
 			
-			if (abs (Reserve_2 (Bx3) - 20) <= 1)Setpos (20, By3 - 1), cout << "=======";
+			if (abs (Calculate (Bx3) - 20) <= 1)Setpos (20, By3 - 1), cout << "=======";
 		}
 		
 		if (X < 0)return;
@@ -674,7 +674,7 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x, B[b].y - 1);
 			
-			if (Reserve_2 (B[b].x) == 20)cout << "======";
+			if (Calculate (B[b].x) == 20)cout << "======";
 			else cout << "      ";
 			
 			if (B[b].life != 0)
@@ -696,17 +696,17 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x - 1, B[b].y - 1);
 			
-			if (Reserve_2 (B[b].x - 1) == 20)cout << "======";
+			if (Calculate (B[b].x - 1) == 20)cout << "======";
 			else cout << "      ";
 			
 			Setpos (B[b].x, B[b].y - 1);
 			
-			if (Reserve_2 (B[b].x) == 20)cout << "======";
+			if (Calculate (B[b].x) == 20)cout << "======";
 			else cout << "      ";
 			
 			Setpos (B[b].x + 1, B[b].y - 1);
 			
-			if (Reserve_2 (B[b].x + 1) == 20)cout << "======";
+			if (Calculate (B[b].x + 1) == 20)cout << "======";
 			else cout << "      ";
 			
 			if (B[b].life != 0)
@@ -737,7 +737,7 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x, B[b].y);
 			
-			if (Reserve_2 (B[b].x) == 20)cout << "==";
+			if (Calculate (B[b].x) == 20)cout << "==";
 			else cout << "  ";
 			
 			if (B[b].life != 0)
@@ -758,7 +758,7 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x, fmax ((float)0, B[b].y - 8));
 			
-			if (Reserve_2 (B[b].x) == 20)
+			if (Calculate (B[b].x) == 20)
 			{
 				for (int i = max (0, (int)B[b].y - 8); i <= B[b].y; i++)cout << "==";
 			}
@@ -784,17 +784,17 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x - 1, B[b].y);
 			
-			if (Reserve_2 (B[b].x) - 1 == 20)cout << "==";
+			if (Calculate (B[b].x) - 1 == 20)cout << "==";
 			else cout << "  ";
 			
 			Setpos (B[b].x + 1, B[b].y);
 			
-			if (Reserve_2 (B[b].x) + 1 == 20)cout << "==";
+			if (Calculate (B[b].x) + 1 == 20)cout << "==";
 			else cout << "  ";
 			
 			Setpos (B[b].x, B[b].y - 1);
 			
-			if (Reserve_2 (B[b].x) == 20)cout << "======";
+			if (Calculate (B[b].x) == 20)cout << "======";
 			else cout << "      ";
 			
 			if (B[b].life != 0)
@@ -874,7 +874,7 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x, B[b].y);
 			
-			if (Reserve_2 (B[b].x) == 20)cout << "==";
+			if (Calculate (B[b].x) == 20)cout << "==";
 			else cout << "  ";
 			
 			if (B[b].life != 0)
@@ -910,7 +910,7 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x, B[b].y);
 			
-			if (Reserve_2 (B[b].x) == 20)cout << "====";
+			if (Calculate (B[b].x) == 20)cout << "====";
 			else cout << "    ";
 			
 			if (B[b].life != 0)
@@ -944,7 +944,7 @@ void Map (int a, int b)
 			B[b].y -= B[b].vy;
 			Setpos (B[b].x, B[b].y);
 			
-			if (Reserve_2 (B[b].x == 20))cout << "==";
+			if (Calculate (B[b].x == 20))cout << "==";
 			else cout << "  ";
 			
 			if (B[b].y <= 3)B[b].life = 0;
@@ -1056,7 +1056,7 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x, B[b].y);
 			
-			if (Reserve_2 (B[b].x) == 20)cout << "==";
+			if (Calculate (B[b].x) == 20)cout << "==";
 			else cout << "  ";
 			
 			if (Boss == 0) B[b].life = 0;
@@ -1083,17 +1083,17 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x - 1, B[b].y);
 			
-			if (Reserve_2 (B[b].x) - 1 == 20)cout << "==";
+			if (Calculate (B[b].x) - 1 == 20)cout << "==";
 			else cout << "  ";
 			
 			Setpos (B[b].x + 1, B[b].y);
 			
-			if (Reserve_2 (B[b].x) + 1 == 20)cout << "==";
+			if (Calculate (B[b].x) + 1 == 20)cout << "==";
 			else cout << "  ";
 			
 			Setpos (B[b].x, B[b].y - 1);
 			
-			if (Reserve_2 (B[b].x) == 20)cout << "======";
+			if (Calculate (B[b].x) == 20)cout << "======";
 			else cout << "      ";
 			
 			if (B[b].life != 0)
@@ -1164,7 +1164,7 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x, B[b].y);
 			
-			if (Reserve_2 (B[b].x) == 20)cout << "==";
+			if (Calculate (B[b].x) == 20)cout << "==";
 			else cout << "  ";
 			
 			if (B[b].life != 0)
@@ -1191,7 +1191,7 @@ void Map (int a, int b)
 			Nor;
 			Setpos (B[b].x, B[b].y - 0.5);
 			
-			if (Reserve_2 (B[b].x) == 20)cout << "===";
+			if (Calculate (B[b].x) == 20)cout << "===";
 			else cout << "   ";
 			
 			if (B[b].life != 0)
@@ -2559,7 +2559,7 @@ void Boss3()
 		}
 	}
 }
-void Ball (int ball)
+void Print (int ball)
 {
 	if (ball == 1)
 	{
@@ -2750,12 +2750,12 @@ void ChangeData()
 	
 	while (true)
 	{
-		system("cls");
+		system ("cls");
 		cout << "数据编辑器\n";
 		cout << "1.初始血量上限:\t\t" << Blomax << "\t" << (n == 1 ? "*" : " ")  << endl;
-		cout << "2.初始血量:\t\t" << Blo << "\t" << (n == 2 ? "*" : " ")  << endl;
+		cout << "2.初始血量:\t\t" << (Blo >= Blomax ? Blomax : Blo) << "\t" << (n == 2 ? "*" : " ")  << endl;
 		cout << "3.升级经验量:\t\t" << Expmax  << "\t" << (n == 3 ? "*" : " ") << endl;
-		cout << "4.血量回复加成:\t\t" << HuiUp << "\t" << (n == 4 ? "*" : " ") <<  endl;
+		cout << "4.血量回复加成:\t\t" << BloodRefillUp << "\t" << (n == 4 ? "*" : " ") <<  endl;
 		cout << "5.初始血量回复:\t\t" << Blo_Refill << "\t" << (n == 5 ? "*" : " ")  << endl;
 		cout << "6.攻击加成:\t\t" << Attack << "\t" << (n == 6 ? "*" : " ")  << endl;
 		cout << "7.血量加成:\t\t" << BloUp << "\t" << (n == 7 ? "*" : " ")  << endl;
@@ -2770,7 +2770,11 @@ void ChangeData()
 		else if (ch == VK_TAB)
 		{
 			cout << "请输入:";
+			CONSOLE_CURSOR_INFO cursor_info;
+			cursor_info.bVisible = 1;
+			cursor_info.dwSize = 1;
 			cin >> tmp;
+			cursor_info.bVisible = 0;
 			
 			if (n == 1)
 				Blomax = tmp;
@@ -2779,7 +2783,7 @@ void ChangeData()
 			else if (n == 3)
 				Expmax = tmp;
 			else if (n == 4)
-				HuiUp = tmp;
+				BloodRefillUp = tmp;
 			else if (n == 5)
 				Blo_Refill = tmp;
 			else if (n == 6)
@@ -2843,7 +2847,7 @@ Start:
 	
 	if (Win % 2 == 0 && D == 0)
 	{
-		if (Win > 0)Ball (5);
+		if (Win > 0)Print (5);
 		
 		Boss = 0;
 	lL:
@@ -2962,8 +2966,9 @@ Start:
 			}
 		}
 		
-		if ((GetAsyncKeyState (VK_UP) & 0x8000) ? 0 : 1) u1 = 0;
-		
+		if ((GetAsyncKeyState (VK_UP) & 0x8000) ? 0 : 1)
+			u1 = 0;
+			
 		if ((GetAsyncKeyState (VK_DOWN) & 0x8000) ? 0 : 1) u2 = 0;
 		
 		if (kbhit())
@@ -2981,16 +2986,19 @@ Start:
 					cout << "\t忍术:缓慢回复血量\n";
 					
 				if (Thun)
-					cout << "\t雷盾:一段时间无敌\t剩余时间"<<Thun<<endl;
+					cout << "\t雷盾:一段时间无敌\t剩余时间" << Thun << endl;
 					
 				if (Water)
-					cout << "\t水遁:清除前方障碍\t剩余时间"<<Water<<endl;
+					cout << "\t水遁:清除前方障碍\t剩余时间" << Water << endl;
 					
 				if (Fire)
-					cout << "\t火阵:自动攻击敌人\t剩余时间"<<Fire<<endl;
+					cout << "\t火阵:自动攻击敌人\t剩余时间" << Fire << endl;
 					
 				if (Magne)
-					cout << "\t磁铁:自动收集经验\t剩余时间"<<Magne<<endl;
+					cout << "\t磁铁:自动收集经验\t剩余时间" << Magne << endl;
+					
+				if (Wind)
+					cout << "\t御风:奔跑躲避攻击\t剩余时间" << Wind << endl;
 					
 				Setpos (4, 1);
 				cout << "↑/↓ 跳跃/下翻，←→ 些微移动（松手即返回）";
@@ -2999,7 +3007,9 @@ Start:
 				Setpos (6, 1);
 				cout << "打败 7 波即胜利，打败 BOSS 有新天赋。";
 				_getch();
-				system("cls");
+				system ("cls");
+				Setpos (20, 0);
+				cout << "============================================================" << endl;
 			}
 			else if (g == 'c')
 			{
@@ -3023,13 +3033,13 @@ Start:
 		
 		if (Magne > 0) Magne--;
 		
-		if (Fire > 0) Ball (1), Fire--;
+		if (Fire > 0) Print (1), Fire--;
 		
-		if (Water > 0) Ball (2), Water--;
+		if (Water > 0) Print (2), Water--;
 		
-		if (Wind > 0) Ball (3), Wind--;
+		if (Wind > 0) Print (3), Wind--;
 		
-		if (Thun > 0) Ball (4), Thun--;
+		if (Thun > 0) Print (4), Thun--;
 		
 		if (Boss == 0) Enemy_Normal (L, T % 1500);
 		
@@ -3074,10 +3084,9 @@ Start:
 		Color (0);
 		Setpos (1, 9), cout << "攻击: " << 16 + Lvl* Attack << "  ";
 		Setpos (2, 1);
-		
 		Exp = min (Exp, Expmax);
 		
-		if (Exp >= Expmax)Exp = 0, Lvl++, Blo_Refill += HuiUp, Blomax += BloUp;
+		if (Exp >= Expmax)Exp = 0, Lvl++, Blo_Refill += BloodRefillUp, Blomax += BloUp;
 		
 		if (Lvl > 0)Color (5);
 		
@@ -3086,9 +3095,9 @@ Start:
 		Setpos (2, 9);
 		cout << "经验: " << Exp << "  ";
 		
-		if (Boss > 0) Setpos (3, 1), cout << "血量     : ", Ball (7);
+		if (Boss > 0) Setpos (3, 1), cout << "血量     : ", Print (7);
 		
-		if (Boss > 0 && Boss != 6) Setpos (4, 1), cout << "怪物血量: ", Ball (6);
+		if (Boss > 0 && Boss != 6) Setpos (4, 1), cout << "怪物血量: ", Print (6);
 		
 		if (Boss == 6) Setpos (1, 9), printf ("时间: %0.1f s  ", T / 15.0);
 		
@@ -3145,6 +3154,7 @@ Start:
 		Setpos (15, 11);
 		Color (4);
 		cout << "GAME OVER...";
+		Sleep (2000);
 		goto ReStart;
 		Blo = Blomax;
 	}
