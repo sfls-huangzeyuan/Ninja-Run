@@ -1,5 +1,6 @@
 # This is a simple text-based Ninja-Run game.
 ![](https://img.shields.io/github/languages/top/sfls-huangzeyuan/Ninja-Run?color=red&label=C%2B%2B&logo=C%2B%2B&logoColor=lightblue)
+![](https://img.shields.io/github/license/sfls-huangzeyuan/Ninja-Run)
 <br>
 ![](https://img.shields.io/github/release-date/sfls-huangzeyuan/Ninja-Run?logo=github)
 ![](https://img.shields.io/github/release-date-pre/sfls-huangzeyuan/Ninja-Run?label=pre-release)
