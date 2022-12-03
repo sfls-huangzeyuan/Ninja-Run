@@ -59,7 +59,7 @@ main.cpp:72,728 Bytes=3164 Lines=**7.20 Kilobytes**
 ---
 ### BSD 3-Clause License
 
-##### Copyright (c) 2022, sfls-huangzeyuan@github.com, ZeYuan H.
+##### Copyright (c) 2022, [sfls-huangzeyuan@github.com](https://github.com/sfls-huangzeyuan),ZeYuan H.
 
 **Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:**
