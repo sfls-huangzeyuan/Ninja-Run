@@ -9,7 +9,9 @@
 <br>
 ![](https://img.shields.io/github/repo-size/sfls-huangzeyuan/Ninja-Run)
 ![](https://img.shields.io/github/issues/sfls-huangzeyuan/Ninga-Run)
-
+<br>
+English | [中文](https://github.com/sfls-huangzeyuan/Ninja-Run/blob/main/README_CN.md#%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E6%96%87%E5%AD%97%E5%BF%8D%E8%80%85%E8%B7%91%E9%85%B7%E6%B8%B8%E6%88%8F)
+<br>
 ## We are now requesting for English translation.
 
 ### Use
