@@ -10,7 +10,7 @@
 ![](https://img.shields.io/github/repo-size/sfls-huangzeyuan/Ninja-Run)
 ![](https://img.shields.io/github/issues/sfls-huangzeyuan/Ninga-Run)
 <br>
-[English](https://github.com/sfls-huangzeyuan/Ninja-Run/blob/main/README.md) | 中文
+[English](https://github.com/sfls-huangzeyuan/Ninja-Run/blob/main/README.md#this-is-a-simple-text-based-ninja-run-game) | 中文
 <br>
 
 ## 正在寻求进一步的英语翻译
