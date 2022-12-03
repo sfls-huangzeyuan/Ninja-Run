@@ -964,87 +964,87 @@ void Map (int a, int b)
 				
 				if (B[b].what >= 100 && B[b].what < 200)
 				{
-					if (B[b].what % 5 == 0)cout << "我";
+					if (B[b].what % 5 == 0)cout << "K";
 					
-					if (B[b].what % 5 == 1)cout << "是";
+					if (B[b].what % 5 == 1)cout << "N";
 					
-					if (B[b].what % 5 == 2)cout << "最";
+					if (B[b].what % 5 == 2)cout << "E";
 					
-					if (B[b].what % 5 == 3)cout << "强";
+					if (B[b].what % 5 == 3)cout << "E";
 					
-					if (B[b].what % 5 == 4)cout << "的";
+					if (B[b].what % 5 == 4)cout << "L";
 				}
 				
 				if (B[b].what >= 200 && B[b].what < 300)
 				{
-					if (B[b].what % 6 == 0)cout << "神";
+					if (B[b].what % 6 == 0)cout << "K";
 					
-					if (B[b].what % 6 == 1)cout << "级";
+					if (B[b].what % 6 == 1)cout << "N";
 					
-					if (B[b].what % 6 == 2)cout << "怪";
+					if (B[b].what % 6 == 2)cout << "E";
 					
-					if (B[b].what % 6 == 3)cout << "物";
+					if (B[b].what % 6 == 3)cout << "E";
 					
-					if (B[b].what % 6 == 4)cout << "之";
+					if (B[b].what % 6 == 4)cout << "L";
 					
-					if (B[b].what % 6 == 5)cout << "光";
+					if (B[b].what % 6 == 5)cout << "!";
 				}
 				
 				if (B[b].what >= 300 && B[b].what < 400)
 				{
-					if (B[b].what % 8 == 0)cout << "颤";
+					if (B[b].what % 8 == 0)cout << "F";
 					
-					if (B[b].what % 8 == 1)cout << "抖";
+					if (B[b].what % 8 == 1)cout << "R";
 					
-					if (B[b].what % 8 == 2)cout << "吧";
+					if (B[b].what % 8 == 2)cout << "I";
 					
-					if (B[b].what % 8 == 3)cout << "无";
+					if (B[b].what % 8 == 3)cout << "G";
 					
-					if (B[b].what % 8 == 4)cout << "能";
+					if (B[b].what % 8 == 4)cout << "H";
 					
-					if (B[b].what % 8 == 5)cout << "的";
+					if (B[b].what % 8 == 5)cout << "T";
 					
-					if (B[b].what % 8 == 6)cout << "人";
+					if (B[b].what % 8 == 6)cout << "E";
 					
-					if (B[b].what % 8 == 7)cout << "类";
+					if (B[b].what % 8 == 7)cout << "N";
 				}
 				
 				if (B[b].what >= 400 && B[b].what < 500)
 				{
-					if (B[b].what % 8 == 0)cout << "还";
+					if (B[b].what % 8 == 0)cout << "K";
 					
-					if (B[b].what % 8 == 1)cout << "不";
+					if (B[b].what % 8 == 1)cout << "N";
 					
-					if (B[b].what % 8 == 2)cout << "快";
+					if (B[b].what % 8 == 2)cout << "E";
 					
-					if (B[b].what % 8 == 3)cout << "跪";
+					if (B[b].what % 8 == 3)cout << "E";
 					
-					if (B[b].what % 8 == 4)cout << "倒";
+					if (B[b].what % 8 == 4)cout << "L";
 					
-					if (B[b].what % 8 == 5)cout << "在";
+					if (B[b].what % 8 == 5)cout << "!";
 					
-					if (B[b].what % 8 == 6)cout << "朕";
+					if (B[b].what % 8 == 6)cout << "!";
 					
-					if (B[b].what % 8 == 7)cout << "前";
+					if (B[b].what % 8 == 7)cout << "！";
 				}
 				
 				if (B[b].what >= 500 && B[b].what < 600)
 				{
-					if (B[b].what % 8 == 0)cout << "看";
+					if (B[b].what % 8 == 0)cout << "W";
 					
-					if (B[b].what % 8 == 1)cout << "懂";
+					if (B[b].what % 8 == 1)cout << "I";
 					
-					if (B[b].what % 8 == 2)cout << "这";
+					if (B[b].what % 8 == 2)cout << "M";
 					
-					if (B[b].what % 8 == 3)cout << "句";
+					if (B[b].what % 8 == 3)cout << "P";
 					
-					if (B[b].what % 8 == 4)cout << "话";
+					if (B[b].what % 8 == 4)cout << "Y";
 					
-					if (B[b].what % 8 == 5)cout << "的";
+					if (B[b].what % 8 == 5)cout << "M";
 					
-					if (B[b].what % 8 == 6)cout << "是";
+					if (B[b].what % 8 == 6)cout << "A";
 					
-					if (B[b].what % 8 == 7)cout << "猪";
+					if (B[b].what % 8 == 7)cout << "N";
 				}
 				
 				if (a == 1) Reserve (1, B[b].x, B[b].y, b);
@@ -1139,21 +1139,21 @@ void Map (int a, int b)
 				cout << "︺";
 				Setpos (B[b].x, B[b].y - 1);
 				
-				if (B[b].what == -2) cout << "﹝镖﹞";
+				if (B[b].what == -2) cout << "﹝AT﹞";
 				
-				if (B[b].what == -3) cout << "﹝火﹞";
+				if (B[b].what == -3) cout << "﹝HE﹞";
 				
-				if (B[b].what == -4) cout << "﹝水﹞";
+				if (B[b].what == -4) cout << "﹝WT﹞";
 				
-				if (B[b].what == -5) cout << "﹝风﹞";
+				if (B[b].what == -5) cout << "﹝WD﹞";
 				
-				if (B[b].what == -6) cout << "﹝雷﹞";
+				if (B[b].what == -6) cout << "﹝TH﹞";
 				
-				if (B[b].what == -7) cout << "﹝磁﹞";
+				if (B[b].what == -7) cout << "﹝MG﹞";
 				
-				if (B[b].what == -8) cout << "﹝血﹞";
+				if (B[b].what == -8) cout << "﹝BL﹞";
 				
-				if (B[b].what == -9) cout << "﹝忍﹞";
+				if (B[b].what == -9) cout << "﹝NT﹞";
 				
 				if (a == 1) Reserve (-2, B[b].x, B[b].y, b);
 			}
@@ -2675,36 +2675,36 @@ void Print (int ball)
 		system ("cls");
 		Color (5);
 		Setpos (10, 10);
-		cout << "新天赋！";
+		cout << "New Talent!";
 	Y:
 		int rr = rand() % 4 + 2;
 		Setpos (12, 10);
 		
 		if (rr == Ren) goto Y;
 		
-		if (rr == 2)cout << "瞬跳";
+		if (rr == 2)cout << "Sudden Jump";
 		
-		if (rr == 3)cout << "空之舞";
+		if (rr == 3)cout << "Flying";
 		
-		if (rr == 4)cout << "三段跳";
+		if (rr == 4)cout << "Three-Time-Jump";
 		
-		if (rr == 5)cout << "反重力跳跃";
+		if (rr == 5)cout << "Anti-Physic Jump";
 		
 		Setpos (14, 10);
-		cout << "当前天赋：";
+		cout << "Talent Using";
 		
-		if (Ren == 1)cout << "小无敌";
+		if (Ren == 1)cout << "None";
 		
-		if (Ren == 2)cout << "瞬跳";
+		if (Ren == 2)cout << "Sudden Jump";
 		
-		if (Ren == 3)cout << "空之舞";
+		if (Ren == 3)cout << "Flying";
 		
-		if (Ren == 4)cout << "三段跳";
+		if (Ren == 4)cout << "Three-Time-Jump";
 		
-		if (Ren == 5)cout << "反重力跳跃";
+		if (Ren == 5)cout << "Anti-Physic Jump";
 		
 		Setpos (16, 10);
-		cout << "换否？（y/n）";
+		cout << "Wanna change？（y/n）";
 	G:
 		char g = _getch();
 		
@@ -2751,15 +2751,15 @@ void ChangeData()
 	while (true)
 	{
 		system ("cls");
-		cout << "数据编辑器\n";
-		cout << "1.初始血量上限:\t\t" << Blomax << "\t" << (n == 1 ? "*" : " ")  << endl;
-		cout << "2.初始血量:\t\t" << (Blo >= Blomax ? Blomax : Blo) << "\t" << (n == 2 ? "*" : " ")  << endl;
-		cout << "3.升级经验量:\t\t" << Expmax  << "\t" << (n == 3 ? "*" : " ") << endl;
-		cout << "4.血量回复加成:\t\t" << BloodRefillUp << "\t" << (n == 4 ? "*" : " ") <<  endl;
-		cout << "5.初始血量回复:\t\t" << Blo_Refill << "\t" << (n == 5 ? "*" : " ")  << endl;
-		cout << "6.攻击加成:\t\t" << Attack << "\t" << (n == 6 ? "*" : " ")  << endl;
-		cout << "7.血量加成:\t\t" << BloUp << "\t" << (n == 7 ? "*" : " ")  << endl;
-		cout << "按下Tab修改,w和s切换,Esc退出" << endl;
+		cout << "Data Reviser\n";
+		cout << "1.Max Blood:\t\t" << Blomax << "\t" << (n == 1 ? "*" : " ")  << endl;
+		cout << "2.Blood:\t\t" << (Blo >= Blomax ? Blomax : Blo) << "\t" << (n == 2 ? "*" : " ")  << endl;
+		cout << "3.Exp For Upgrade:\t\t" << Expmax  << "\t" << (n == 3 ? "*" : " ") << endl;
+		cout << "4.Blood Refill Up:\t\t" << BloodRefillUp << "\t" << (n == 4 ? "*" : " ") <<  endl;
+		cout << "5.Blood Refill:\t\t" << Blo_Refill << "\t" << (n == 5 ? "*" : " ")  << endl;
+		cout << "6.Attack Up:\t\t" << Attack << "\t" << (n == 6 ? "*" : " ")  << endl;
+		cout << "7.Blood Up:\t\t" << BloUp << "\t" << (n == 7 ? "*" : " ")  << endl;
+		cout << "Press Tab to modify,w and s switch,Esc exit" << endl;
 		char ch = getch();
 		
 		if (ch == 'w' && n > 1)
@@ -2793,7 +2793,7 @@ void ChangeData()
 		}
 		else if (ch == VK_ESCAPE)
 		{
-			MessageBox (NULL, "数据已保存!", "Data Saved", MB_OK | MB_ICONMASK);
+			MessageBox (NULL, "Saved!", "Data Saved", MB_OK | MB_ICONMASK);
 			return;
 		}
 		
@@ -2980,32 +2980,32 @@ Start:
 				Sleep (100);
 				Setpos (30, 1);
 				Sy++;
-				cout << "状态栏:\n";
+				cout << "Status:\n";
 				
 				if (Ren)
-					cout << "\t忍术:缓慢回复血量\n";
+					cout << "\tNin-Tao:Refill blood\n";
 					
 				if (Thun)
-					cout << "\t雷盾:一段时间无敌\t剩余时间" << Thun << endl;
+					cout << "\tShield:Invincible for a while\tTime" << Thun << endl;
 					
 				if (Water)
-					cout << "\t水遁:清除前方障碍\t剩余时间" << Water << endl;
+					cout << "\tWater-Tao:Clear the way\tTime" << Water << endl;
 					
 				if (Fire)
-					cout << "\t火阵:自动攻击敌人\t剩余时间" << Fire << endl;
+					cout << "\tFire Attack:Automatic attacks enemies\tTime" << Fire << endl;
 					
 				if (Magne)
-					cout << "\t磁铁:自动收集经验\t剩余时间" << Magne << endl;
+					cout << "\tMagnet:Collects Exp\tTime" << Magne << endl;
 					
 				if (Wind)
-					cout << "\t御风:奔跑躲避攻击\t剩余时间" << Wind << endl;
+					cout << "\tWind bending:Run to avoid attack\tTime" << Wind << endl;
 					
 				Setpos (4, 1);
-				cout << "↑/↓ 跳跃/下翻，←→ 些微移动（松手即返回）";
+				cout << "↑/↓ Jump/Run Downwards，←→ Move A Little";
 				Setpos (5, 1);
-				cout << "球可以开启特殊效果，经验积满可提升级别。";
+				cout << "Balls Can Enact Special Effects.";
 				Setpos (6, 1);
-				cout << "打败 7 波即胜利，打败 BOSS 有新天赋。";
+				cout << "Kill 7 Bosses to Win, Gain New Talents.";
 				_getch();
 				system ("cls");
 				Setpos (20, 0);
@@ -3059,7 +3059,7 @@ Start:
 			if (Win == 0)
 			{
 				Setpos (4, 1);
-				cout << "空格可以暂停。";
+				cout << "Use SPACE to pause.";
 			}
 		}
 		
@@ -3079,10 +3079,10 @@ Start:
 		Setpos (1, 1);
 		Blo = fmin (Blo, (float)Blomax);
 		
-		if (Boss == 0)cout << "血量: " << (int)Blo << "/" << (int)Blomax;
+		if (Boss == 0)cout << "Blood: " << (int)Blo << "/" << (int)Blomax;
 		
 		Color (0);
-		Setpos (1, 9), cout << "攻击: " << 16 + Lvl* Attack << "  ";
+		Setpos (1, 9), cout << "Attack: " << 16 + Lvl* Attack << "  ";
 		Setpos (2, 1);
 		Exp = min (Exp, Expmax);
 		
@@ -3090,16 +3090,16 @@ Start:
 		
 		if (Lvl > 0)Color (5);
 		
-		cout << "级别: " << Lvl;
+		cout << "Level: " << Lvl;
 		Color (0);
 		Setpos (2, 9);
-		cout << "经验: " << Exp << "  ";
+		cout << "Exp: " << Exp << "  ";
 		
-		if (Boss > 0) Setpos (3, 1), cout << "血量     : ", Print (7);
+		if (Boss > 0) Setpos (3, 1), cout << "Blood     : ", Print (7);
 		
-		if (Boss > 0 && Boss != 6) Setpos (4, 1), cout << "怪物血量: ", Print (6);
+		if (Boss > 0 && Boss != 6) Setpos (4, 1), cout << "Boss Blood: ", Print (6);
 		
-		if (Boss == 6) Setpos (1, 9), printf ("时间: %0.1f s  ", T / 15.0);
+		if (Boss == 6) Setpos (1, 9), printf ("Time: %0.1f s  ", T / 15.0);
 		
 		if (Win == 0) Sleep (55);
 		
@@ -3163,7 +3163,7 @@ Start:
 		system ("color 7F");
 		Setpos (15, 11);
 		Color (4);
-		cout << "坚持30秒 !";
+		cout << "Don't Die In 30 SEC!";
 		Setpos (30, 0);
 		Win++;
 		D = 0;
