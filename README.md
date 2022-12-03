@@ -2,7 +2,7 @@
 ![](https://img.shields.io/github/languages/top/sfls-huangzeyuan/Ninja-Run?color=red&label=C%2B%2B&logo=C%2B%2B&logoColor=lightblue)
 <br>
 ![](https://img.shields.io/github/release-date/sfls-huangzeyuan/Ninja-Run?logo=github)
-![](https://img.shields.io/github/release-date-pre/sfls-huangzeyuan/Ninja-Run?label=pre-release?logo=github)
+![](https://img.shields.io/github/release-date-pre/sfls-huangzeyuan/Ninja-Run?label=pre-release)
 ![](https://img.shields.io/github/v/release/sfls-huangzeyuan/Ninja-Run?logo=github)
 ![](https://img.shields.io/github/last-commit/sfls-huangzeyuan/Ninja-Run?logo=github)
 <br>
