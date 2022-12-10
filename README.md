@@ -19,6 +19,29 @@ If you just want to try it , view in [release](https://github.com/sfls-huangzeyu
 If you wanna write your own plugin , copy the [main.cpp](https://github.com/sfls-huangzeyuan/Ninga-Run/blob/main/main.cpp) and use [MinGW](https://sourceforge.net/projects/mingw/) to compile it.
 
 ---
+## Version 1.4.5-beta-25 , patch number 2064
+### Done Ideas
+- [ ]  Starting Page **->Done**
+- [ ]  Data Reviser **->Done**
+- [ ]  Collision Box Detect **->Done**
+- [ ]  Attacking Balls **->Done**
+- [ ]  Bosses **->Done**(7/7)
+- [ ]  Endless Mode **->Done**
+### Undone Ideas
+1.  More Bosses **->Developing**
+2.  More Revisable Data **->Developing**
+3.  A New Story Line **->Writing**
+4.  Open World **->Writing**
+### File Size
+ninja.exe:993,280 Bytes=**970 Kilobytes**
+</br>
+main.cpp:91,636 Bytes=4312 Lines=**89.4 Kilobytes**
+### Changelog
+1. **Added:** 'E' key can start endless run on Starting Page.
+2. **Improved:** Some printing format
+3. **Fixed:** Some crashes and made the game more fluent.
+4. **Size:** Obviously improved size of .EXE file to 970Kb instead of 1.94Mb
+---
 ## Version 1.2.13-beta-17 , patch number 1519
 ### Done Ideas
 - [ ]  Starting Page **->Done**
