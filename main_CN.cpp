@@ -120,6 +120,7 @@ int Blomax, Ren, Exp, Expmax, Lvl, Ice, Drug, ar1, ar2, Tar1, Tar2, bl, br, Win,
     Bl[4], Attack = 6, BloUp = 5, BloodRefillUp = 5, UnDeadLast = 1;
 float X, Y, Vx, Vy, Ding, Blo, Blo_Refill, Bx1, By1, Bx2, By2, Bx3, By3, Bvx1,
       Bvy1, Bvx2, Bvy2, Bvx3, Bvy3, Bway[1001][2];
+bool Boss_ = false;
 struct bullet
 {
 	float x, y, vx, vy;
@@ -3829,7 +3830,7 @@ int main()
 		
 	else if ( c == 'e' || c == 'E' )
 		endless = true;
-	
+		
 	system ( "cls" );
 	//bool endless = ModeChoose();
 ReStart:
@@ -4186,10 +4187,12 @@ Start:
 			cout << "血量: " << ( int ) Blo << "/" << ( int ) Blomax;
 			
 		Setpos ( 5, 1 );
-		cout<<"血量:";
-		for ( float i = 1; i <= Blo; i += Blomax / 30.0 )
-			cout << "▄";
-			
+		cout << "血量:";
+		
+		if ( Boss==0 )
+			for ( float i = 1; i <= Blo; i += Blomax / 25.0 )
+				cout << "▄";
+				
 		Color ( 0 );
 		Setpos ( 1, 9 ), cout << "攻击: " << 16 + Lvl* Attack << "  ";
 		Setpos ( 2, 1 );
