@@ -117,10 +117,10 @@ int Blomax, Ren, Exp, Expmax, Lvl, Ice, Drug, ar1, ar2, Tar1, Tar2, bl, br, Win,
     T, Tb, Sy, Up, Upt, Down, u1, u2, Kill, Killb, L, Ll[4], Li, D, Gd[10], Biao,
     Fire, Fir, Water, Thun, Wind, Magne, I[20][2], ib, Dis, Disb, Dis1, Disb1, Boss,
     Bblo, Bblomax, Bwhat1, Bwhat2, Bwhat3, Bgo1[10], Bgo2[10], Bgo3[10], Bbr, Bbl,
-    Bl[4], Attack = 6, BloUp = 5, BloodRefillUp = 5, UnDeadLast = 1;
+    Bl[4], Attack = 6, BloUp = 5, BloodRefillUp = 5, UnDeadLast = 1, EffectLast = 250, ExpAddBlo = 0;
 float X, Y, Vx, Vy, Ding, Blo, Blo_Refill, Bx1, By1, Bx2, By2, Bx3, By3, Bvx1,
       Bvy1, Bvx2, Bvy2, Bvx3, Bvy3, Bway[1001][2];
-bool Boss_ = false;
+long long HarmSum = 0;
 struct bullet
 {
 	float x, y, vx, vy;
@@ -154,11 +154,17 @@ void Reserve ( int a, float x, float y, int b )
 			if ( abs ( x - Nox[i] ) + abs ( y - Noy[i] ) < 1.5 )
 			{
 				if ( B[b].what == -10 )
+				{
 					Exp += 2;
-					
+					Blo += 2 * ExpAddBlo;
+				}
+				
 				if ( B[b].what == -11 )
-					Exp += 1;
-					
+				{
+					Exp += 2;
+					Blo += 1 * ExpAddBlo;
+				}
+				
 				B[b].life = 0;
 				
 				if ( B[b].life == 0 && b == bl )
@@ -177,14 +183,14 @@ void Reserve ( int a, float x, float y, int b )
 					Exp += 5, Biao += 5;
 					
 				if ( B[b].what == -3 )
-					Fire = 300, Ice = 0, Fir = 3;
+					Fire = EffectLast, Ice = 0, Fir = 3;
 					
 				if ( B[b].what == -4 )
-					Water = 200;
+					Water = EffectLast;
 					
 				if ( B[b].what == -5 )
 				{
-					Wind = 70;
+					Wind = EffectLast / 3.5;
 					Ding = 28.25;
 					Ice = 0;
 					
@@ -203,7 +209,7 @@ void Reserve ( int a, float x, float y, int b )
 				
 				if ( B[b].what == -6 )
 				{
-					Thun = 200;
+					Thun = EffectLast;
 					system ( "color 1F" );
 					Sleep ( 20 );
 					system ( "color 6F" );
@@ -212,7 +218,7 @@ void Reserve ( int a, float x, float y, int b )
 				}
 				
 				if ( B[b].what == -7 )
-					Magne = 300;
+					Magne = EffectLast * 1.2;
 					
 				if ( B[b].what == -8 )
 					Ice = 0, Drug = 0, Blo = fmin ( ( float ) Blomax, Blo + 20 );
@@ -231,7 +237,7 @@ void Reserve ( int a, float x, float y, int b )
 		}
 	}
 	
-	if ( Wind == 0 && Thun == 0 && ( B[b].kill != 0 || Killb >= 15 || Ren == 1 && Killb > 0 ) )
+	if ( Wind == 0 && Thun == 0 && ( ( B[b].kill != 0 || Killb >= 15 || Ren == 1 ) && Killb > 0 ) )
 		return;
 		
 	for ( int i = 0; i < 3; i++ )
@@ -254,59 +260,42 @@ void Reserve ( int a, float x, float y, int b )
 				if ( B[b].what >= 99 )
 				{
 					Blo -= 10;
-					SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-					                          FOREGROUND_RED | FOREGROUND_INTENSITY );
-					Setpos ( 17, 12 );
-					cout << "-10";
-					SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-					                          FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE );
+					HarmSum += 10;
 				}
 				
 				if ( B[b].what == 14 )
 				{
 					Blo -= 15, Ice = 100, B[b].life = 0;
-					SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-					                          FOREGROUND_RED | FOREGROUND_INTENSITY );
-					Setpos ( 11, 17 );
-					cout << "-15";
-					SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-					                          FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE );
+					HarmSum += 15;
 				}
 				
 				else if ( B[b].what == 15 )
 				{
-					Blo -= 20, Ice = 0, B[b].life = 0;
-					SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-					                          FOREGROUND_RED | FOREGROUND_INTENSITY );
-					Setpos ( 12, 14 );
-					cout << "-20";
-					SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-					                          FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE );
+					Blo -= 20;
+					Ice = 0;
+					B[b].life = 0;
+					HarmSum += 20;
 				}
 				
 				else if ( B[b].what == 17 )
 				{
-					Blo -= 5, Drug = 100, B[b].life = 0;
-					SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-					                          FOREGROUND_RED | FOREGROUND_INTENSITY );
-					Setpos ( 10, 15 );
-					cout << "-5";
-					SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-					                          FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE );
+					Blo -= 5;
+					Drug = 100;
+					B[b].life = 0;
+					HarmSum += 5;
 				}
 				
 				else if ( B[b].what >= 13 && B[b].what <= 17 )
-					Blo -= 10, B[b].life = 0;
-					
+				{
+					Blo -= 10;
+					B[b].life = 0;
+					HarmSum += 10;
+				}
+				
 				else
 				{
 					Blo -= 15;
-					SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-					                          FOREGROUND_RED | FOREGROUND_INTENSITY );
-					Setpos ( 16, 19 );
-					cout << "-15";
-					SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-					                          FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE );
+					HarmSum += 15;
 				}
 				
 				B[b].kill = 1, Killb = 20;
@@ -321,20 +310,21 @@ void Reserve ( int a, float x, float y, int b )
 			if ( abs ( x - Nox[i] ) + abs ( y - Noy[i] ) < 1.5 )
 			{
 				if ( a == 2 )
+				{
 					Blo -= 20;
-					
+					HarmSum += 20;
+				}
+				
 				else if ( a == 8 )
+				{
 					Blo -= 10;
-					
+					HarmSum += 10;
+				}
+				
 				else
 				{
 					Blo -= 15;
-					SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-					                          FOREGROUND_RED | FOREGROUND_INTENSITY );
-					Setpos ( 16, 19 );
-					cout << "-15";
-					SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-					                          FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE );
+					HarmSum += 15;
 				}
 				
 				B[b].kill = 1, Killb = 20;
@@ -369,12 +359,7 @@ void Reserve ( int a, float x, float y, int b )
 			if ( abs ( x - Nox[i] ) < 1 && Noy[i] - y <= 0 && Noy[i] - y >= -8 )
 			{
 				Blo -= 25, B[b].kill = 1, Killb = 20;
-				SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-				                          FOREGROUND_RED | FOREGROUND_INTENSITY );
-				Setpos ( 15, 14 );
-				cout << "-25";
-				SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-				                          FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE );
+				HarmSum += 25;
 				Kill = 1;
 				Vy = -1;
 				Y -= 0.5;
@@ -1549,7 +1534,7 @@ void Map ( int a, int b )
 			}
 		}
 		
-		if ( B[b].what == -11 || B[b].what == -12 )
+		if ( B[b].what == -10 || B[b].what == -11 )
 		{
 			Nor;
 			Setpos ( B[b].x, B[b].y );
@@ -2487,24 +2472,14 @@ void Attack_Boss ( int bx, int by )
 		     abs ( Nox[i] - bx ) < 1 && abs ( Noy[i] - by ) < 1 && Bgo1[4] == 0 )
 		{
 			Blo -= 20, Bgo1[4] = 1, Killb = 20, Kill = 1;
-			SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-			                          FOREGROUND_RED | FOREGROUND_INTENSITY );
-			Setpos ( 30, 14 );
-			cout << "-20";
-			SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-			                          FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE );
+			HarmSum += 20;
 		}
 		
 		if ( ( Boss == 2 || Boss == 6 ) && Wind == 0 && Thun == 0 &&
 		     abs ( Nox[i] - bx ) < 1 && abs ( Noy[i] - by ) < 1 && Bgo2[8] == 0 )
 		{
 			Blo -= 20, Bgo2[8] = 1, Killb = 20, Kill = 1;
-			SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-			                          FOREGROUND_RED | FOREGROUND_INTENSITY );
-			Setpos ( 30, 14 );
-			cout << "-20";
-			SetConsoleTextAttribute ( GetStdHandle ( STD_OUTPUT_HANDLE ),
-			                          FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE );
+			HarmSum += 20;
 		}
 	}
 }
@@ -3636,7 +3611,6 @@ void Decode ( char str_[20] )
 	for ( int i = 0; i <= 19; i++ )
 		str[i + 1] = toupper ( str_[i] ) - 'A';
 		
-	getch();
 	Blomax = str[1] * 26 + str[2];
 	Blo = min ( Blomax, str[3] * 26 + str[4] );
 	Expmax = str[5] * 26 + str[6];
@@ -3644,6 +3618,7 @@ void Decode ( char str_[20] )
 	Blo_Refill = str[9] * 26 + str[10];
 	Attack = str[11] * 26 + str[12];
 	BloUp = str[13] * 26 + str[14];
+	EffectLast = str[15] * 26 + str[16];
 	return ;
 }
 void Decode_ ( char str[30] )
@@ -3671,33 +3646,45 @@ void Decode_ ( char str[30] )
 void ChangeData()
 {
 	int n = 1, tmp = 0;
+	system ( "cls" );
+	cout << "Pls Enter Cheat Code.>>>";
+	int a;
+	cin >> a;
 	
+	if ( a != 3713 )
+		return;
+		
 	while ( true )
 	{
 		system ( "cls" );
 		cout << "数据编辑器\n";
-		cout << "1.初始血量上限:\t\t" << Blomax << "\t" <<
+		cout << "1.初始血量上限:\t\t" << Blomax << "\t\t" <<
 		     ( n == 1 ? "*" : " " )  << endl;
-		cout << "2.初始血量:\t\t" << ( Blo >= Blomax ? Blomax : Blo ) << "\t" <<
+		cout << "2.初始血量:\t\t" << ( Blo >= Blomax ? Blomax : Blo ) << "\t\t" <<
 		     ( n == 2 ? "*" : " " )  << endl;
-		cout << "3.升级经验量:\t\t" << Expmax  << "\t" << ( n == 3 ? "*" : " " ) <<
+		cout << "3.升级经验量:\t\t" << Expmax  << "\t\t" << ( n == 3 ? "*" : " " ) <<
 		     endl;
-		cout << "4.血量回复加成:\t\t" << BloodRefillUp << "\t" <<
+		cout << "4.血量回复加成:\t\t" << BloodRefillUp << "\t\t" <<
 		     ( n == 4 ? "*" : " " ) <<  endl;
-		cout << "5.初始血量回复:\t\t" << Blo_Refill << "\t" <<
+		cout << "5.初始血量回复:\t\t" << Blo_Refill << "\t\t" <<
 		     ( n == 5 ? "*" : " " )  << endl;
-		cout << "6.攻击加成:\t\t" << Attack << "\t" << ( n == 6 ? "*" : " " )  <<
+		cout << "6.攻击加成:\t\t" << Attack << "\t\t" << ( n == 6 ? "*" : " " )  <<
 		     endl;
-		cout << "7.血量加成:\t\t" << BloUp << "\t" << ( n == 7 ? "*" : " " )  <<
+		cout << "7.血量加成:\t\t" << BloUp << "\t\t" << ( n == 7 ? "*" : " " )  <<
 		     endl;
-		cout << "8.配置码输入:\t\t\t" << ( n == 8 ? "*" : " " )  << endl;
+		cout << "8.状态持续时间:\t\t" << EffectLast << "\t\t" << ( n == 8 ? "*" : " " )  <<
+		     endl;
+		cout << boolalpha;
+		cout << "9.经验球回复血量倍率:\t" << ( ExpAddBlo > 0 ? true : false ) << " " << ExpAddBlo << "\t\t" << ( n == 9 ? "*" : " " )  <<
+		     endl;
+		cout << "10.配置码输入:\t\t\t\t" << ( n == 10 ? "*" : " " )  << endl;
 		cout << "按下Tab修改,w和s切换,Esc显示配置码并退出" << endl;
 		char ch = getch();
 		
 		if ( ch == 'w' && n > 1 )
 			n--;
 			
-		if ( ch == 's' && n < 8 )
+		if ( ch == 's' && n < 10 )
 			n++;
 			
 		else if ( ch == VK_TAB )
@@ -3728,6 +3715,12 @@ void ChangeData()
 				BloUp = tmp;
 				
 			else if ( n == 8 )
+				EffectLast = tmp;
+				
+			else if ( n == 9 )
+				ExpAddBlo = tmp;
+				
+			else if ( n == 10 )
 			{
 				char str_[20];
 				gets ( str_ );
@@ -3757,8 +3750,10 @@ void ChangeData()
 			str[12] = ( char ) ( int ( Attack ) % 26 + 'A' + rand() % 2 * 32 );
 			str[13] = ( char ) ( int ( BloUp ) / 26 + 'A' + rand() % 2 * 32 );
 			str[14] = ( char ) ( int ( BloUp ) % 26 + 'A' + rand() % 2 * 32 );
+			str[15] = ( char ) ( int ( EffectLast ) / 26 + 'A' + rand() % 2 * 32 );
+			str[16] = ( char ) ( int ( EffectLast ) % 26 + 'A' + rand() % 2 * 32 );
 			
-			for ( int i = 15; i <= 19; i++ )
+			for ( int i = 17; i <= 19; i++ )
 				str[i] = rand() % 26 + 'A' + rand() % 2 * 32;
 				
 			puts ( str );
@@ -4014,6 +4009,7 @@ Start:
 			{
 				Sleep ( 100 );
 				Setpos ( 30, 1 );
+				Setpos ( 30, 1 );
 				Sy++;
 				cout << "状态栏:\n";
 				
@@ -4050,6 +4046,7 @@ Start:
 				else
 					cout << "NORMAL";
 					
+				cout << "\n  受到总伤害:" << HarmSum << "点";
 				_getch();
 				system ( "cls" );
 				Setpos ( 20, 0 );
@@ -4184,15 +4181,22 @@ Start:
 		Blo = fmin ( Blo, ( float ) Blomax );
 		
 		if ( Boss == 0 )
-			cout << "血量: " << ( int ) Blo << "/" << ( int ) Blomax;
+			cout << "死亡次数: " << ( int ) D;
 			
 		Setpos ( 5, 1 );
 		cout << "血量:";
 		
-		if ( Boss==0 )
-			for ( float i = 1; i <= Blo; i += Blomax / 25.0 )
+		if ( Boss == 0 )
+		{
+			for ( float i = 1; i <= Blo; i += Blomax / 20.0 )
 				cout << "▄";
 				
+			Setpos ( 5, 21 );
+			cout << ( int ) Blo << "  /" ;
+			Setpos ( 5, 25 );
+			cout << Blomax;
+		}
+		
 		Color ( 0 );
 		Setpos ( 1, 9 ), cout << "攻击: " << 16 + Lvl* Attack << "  ";
 		Setpos ( 2, 1 );
@@ -4212,8 +4216,15 @@ Start:
 		Color ( 0 );
 		
 		if ( Boss > 0 )
-			Setpos ( 3, 1 ), cout << "血量     : ", Print ( 7 );
+		{
+			Setpos ( 3, 1 );
 			
+			for ( float i = 1; i <= Blo; i += Blomax / 25.0 )
+				cout << "▄";
+				
+			Print ( 7 );
+		}
+		
 		if ( Boss > 0 && Boss != 6 )
 			Setpos ( 4, 1 ), cout << "怪物血量: ", Print ( 6 );
 			
