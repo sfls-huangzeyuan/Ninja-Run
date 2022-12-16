@@ -13,6 +13,9 @@
 #define Chang2 {Bwhat2=0;Bvx2=Bvy2=0;memset(Bgo2,0,sizeof(Bgo2));}
 #define Chang3 {Bwhat3=0;Bvx3=Bvy3=0;memset(Bgo3,0,sizeof(Bgo3));}
 using namespace std;
+ifstream fin;
+ofstream fout;
+ofstream foutlog;
 int Calculate ( float a )
 {
 	return ( ( int ) ( a * 10 + 5 ) ) / 10;
@@ -117,7 +120,7 @@ int Blomax, Ren, Exp, Expmax, Lvl, Ice, Drug, ar1, ar2, Tar1, Tar2, bl, br, Win,
     T, Tb, Sy, Up, Upt, Down, u1, u2, Kill, Killb, L, Ll[4], Li, D, Gd[10], Biao,
     Fire, Fir, Water, Thun, Wind, Magne, I[20][2], ib, Dis, Disb, Dis1, Disb1, Boss,
     Bblo, Bblomax, Bwhat1, Bwhat2, Bwhat3, Bgo1[10], Bgo2[10], Bgo3[10], Bbr, Bbl,
-    Bl[4], Attack = 6, BloUp = 5, BloodRefillUp = 5, UnDeadLast = 1, EffectLast = 250, ExpAddBlo = 0;
+    Bl[4], Attack = 6, BloUp = 5, BloodRefillUp = 5, UnDead = 1, EffectLast = 250, ExpAddBlo = 0, Boost = 0, BoostRate = 2, BiaoAdd = 5, UnDeadLast = 1;
 float X, Y, Vx, Vy, Ding, Blo, Blo_Refill, Bx1, By1, Bx2, By2, Bx3, By3, Bvx1,
       Bvy1, Bvx2, Bvy2, Bvx3, Bvy3, Bway[1001][2];
 long long HarmSum = 0;
@@ -157,12 +160,18 @@ void Reserve ( int a, float x, float y, int b )
 				{
 					Exp += 2;
 					Blo += 2 * ExpAddBlo;
+					
+					if ( Boost )
+						Exp += ( BoostRate - 1 ) * 2;
 				}
 				
 				if ( B[b].what == -11 )
 				{
-					Exp += 2;
+					Exp += 1;
 					Blo += 1 * ExpAddBlo;
+					
+					if ( Boost )
+						Exp += ( BoostRate - 1 ) * 2;
 				}
 				
 				B[b].life = 0;
@@ -180,7 +189,7 @@ void Reserve ( int a, float x, float y, int b )
 			if ( abs ( x - Nox[i] ) + abs ( y - Noy[i] ) < 2.5 )
 			{
 				if ( B[b].what == -2 )
-					Exp += 5, Biao += 5;
+					Exp += 5, Biao += BiaoAdd;
 					
 				if ( B[b].what == -3 )
 					Fire = EffectLast, Ice = 0, Fir = 3;
@@ -231,6 +240,9 @@ void Reserve ( int a, float x, float y, int b )
 				if ( B[b].life == 0 && b == bl )
 					bl++;
 					
+				if ( B[b].what == 29 )
+					Boost = EffectLast * 1.2;
+					
 				Map ( 3, b );
 				break;
 			}
@@ -261,12 +273,24 @@ void Reserve ( int a, float x, float y, int b )
 				{
 					Blo -= 10;
 					HarmSum += 10;
+					
+					if ( Ren == 1 )
+					{
+						Thun += UnDeadLast;
+						Exp = max ( Exp - 5, 0 );
+					}
 				}
 				
 				if ( B[b].what == 14 )
 				{
 					Blo -= 15, Ice = 100, B[b].life = 0;
 					HarmSum += 15;
+					
+					if ( Ren == 1 )
+					{
+						Thun += UnDeadLast;
+						Exp = max ( Exp - 5, 0 );
+					}
 				}
 				
 				else if ( B[b].what == 15 )
@@ -275,6 +299,12 @@ void Reserve ( int a, float x, float y, int b )
 					Ice = 0;
 					B[b].life = 0;
 					HarmSum += 20;
+					
+					if ( Ren == 1 )
+					{
+						Thun += UnDeadLast;
+						Exp = max ( Exp - 5, 0 );
+					}
 				}
 				
 				else if ( B[b].what == 17 )
@@ -283,6 +313,12 @@ void Reserve ( int a, float x, float y, int b )
 					Drug = 100;
 					B[b].life = 0;
 					HarmSum += 5;
+					
+					if ( Ren == 1 )
+					{
+						Thun += UnDeadLast;
+						Exp = max ( Exp - 5, 0 );
+					}
 				}
 				
 				else if ( B[b].what >= 13 && B[b].what <= 17 )
@@ -290,12 +326,24 @@ void Reserve ( int a, float x, float y, int b )
 					Blo -= 10;
 					B[b].life = 0;
 					HarmSum += 10;
+					
+					if ( Ren == 1 )
+					{
+						Thun += UnDeadLast;
+						Exp = max ( Exp - 5, 0 );
+					}
 				}
 				
 				else
 				{
 					Blo -= 15;
 					HarmSum += 15;
+					
+					if ( Ren == 1 )
+					{
+						Thun += UnDeadLast;
+						Exp = max ( Exp - 5, 0 );
+					}
 				}
 				
 				B[b].kill = 1, Killb = 20;
@@ -313,18 +361,36 @@ void Reserve ( int a, float x, float y, int b )
 				{
 					Blo -= 20;
 					HarmSum += 20;
+					
+					if ( Ren == 1 )
+					{
+						Thun += UnDeadLast;
+						Exp = max ( Exp - 5, 0 );
+					}
 				}
 				
 				else if ( a == 8 )
 				{
 					Blo -= 10;
 					HarmSum += 10;
+					
+					if ( Ren == 1 )
+					{
+						Thun += UnDeadLast;
+						Exp = max ( Exp - 5, 0 );
+					}
 				}
 				
 				else
 				{
 					Blo -= 15;
 					HarmSum += 15;
+					
+					if ( Ren == 1 )
+					{
+						Thun += UnDeadLast;
+						Exp = max ( Exp - 5, 0 );
+					}
 				}
 				
 				B[b].kill = 1, Killb = 20;
@@ -1528,6 +1594,9 @@ void Map ( int a, int b )
 					
 				if ( B[b].what == -9 )
 					cout << "﹝忍﹞";
+					
+				if ( B[b].what == 29 )
+					cout << "﹝宝﹞";
 					
 				if ( a == 1 )
 					Reserve ( -2, B[b].x, B[b].y, b );
@@ -3528,6 +3597,9 @@ void Print ( int ball )
 		if ( rr == Ren )
 			goto Y;
 			
+		if ( Ren == 1 )
+			cout << "小无敌";
+			
 		if ( rr == 2 )
 			cout << "瞬跳";
 			
@@ -3543,9 +3615,6 @@ void Print ( int ball )
 		Setpos ( 14, 10 );
 		cout << "当前天赋：";
 		
-		if ( Ren == 1 )
-			cout << "小无敌";
-			
 		if ( Ren == 2 )
 			cout << "瞬跳";
 			
@@ -3675,16 +3744,18 @@ void ChangeData()
 		cout << "8.状态持续时间:\t\t" << EffectLast << "\t\t" << ( n == 8 ? "*" : " " )  <<
 		     endl;
 		cout << boolalpha;
-		cout << "9.经验球回复血量倍率:\t" << ( ExpAddBlo > 0 ? true : false ) << " " << ExpAddBlo << "\t\t" << ( n == 9 ? "*" : " " )  <<
+		cout << "9.经验球回复血量倍率:\t" << ExpAddBlo << "\t\t" << ( n == 9 ? "*" : " " )  <<
 		     endl;
-		cout << "10.配置码输入:\t\t\t\t" << ( n == 10 ? "*" : " " )  << endl;
+		cout << "10.每轮飞镖数量:\t" << BiaoAdd << "\t\t" << ( n == 10 ? "*" : " " )  <<
+		     endl;
+		cout << "10.配置码输入:\t\t\t\t" << ( n == 11 ? "*" : " " )  << endl;
 		cout << "按下Tab修改,w和s切换,Esc显示配置码并退出" << endl;
 		char ch = getch();
 		
 		if ( ch == 'w' && n > 1 )
 			n--;
 			
-		if ( ch == 's' && n < 10 )
+		if ( ch == 's' && n < 11 )
 			n++;
 			
 		else if ( ch == VK_TAB )
@@ -3721,6 +3792,9 @@ void ChangeData()
 				ExpAddBlo = tmp;
 				
 			else if ( n == 10 )
+				BiaoAdd = tmp;
+				
+			else if ( n == 11 )
 			{
 				char str_[20];
 				gets ( str_ );
@@ -3793,14 +3867,30 @@ void ChangeData()
     return endless;
     }*/
 bool endless;
+int hour = 0, minu = 0, sec = 0;
+int cnt = 0;
+string name;
 int main()
 {
+	//	foutlog.open ( "user_log.txt", ios::out | ios::app );
+	//	foutlog << "\n\n" << "LOG-IN TIME UNIX:" << time ( 0 );
 	system ( "mode con cols=60 lines=37" );
+	/*  cout << "\t\t\tPls Enter Your Name:>>>";
+	    cin >> name;
+	    string str = "/data/user/" + name + "/Memory_Slot.milestone";
+	    char str_[205];
+	
+	    for ( int i = 1; i <= str.size(); i++ )
+	    str_[i] = str[i];
+	
+	    fin.open ( str_, ios::in | ios::trunc );
+	    fout.open ( str_, ios::out | ios::trunc );
+	    fout << "test";*/
 	CONSOLE_CURSOR_INFO cursor_info = {1, 0};
 	SetConsoleCursorInfo ( GetStdHandle ( STD_OUTPUT_HANDLE ), &cursor_info );
 	srand ( ( unsigned ) time ( NULL ) );
 	Win = 0;
-	Ren = 1;
+	Ren = rand() % 4 + 2;
 	Lvl = 1;
 	Blo = Blomax = 250;
 	Expmax = 300;
@@ -3941,6 +4031,9 @@ Start:
 				Down = 0;
 				Up = 2;
 				
+				if ( UnDead == 371381394 )
+					Thun++;
+					
 				if ( Ren == 2 )
 					Map ( -1, 0 ), Vx = 1, X -= 6, Map ( 0, 3 ), Li = 5;
 					
@@ -4012,6 +4105,7 @@ Start:
 				Setpos ( 30, 1 );
 				Sy++;
 				cout << "状态栏:\n";
+				cout << "  正面效果:";
 				
 				if ( Ren )
 					cout << "\t忍术:缓慢回复血量\n";
@@ -4030,6 +4124,34 @@ Start:
 					
 				if ( Wind )
 					cout << "\t御风:奔跑躲避攻击\t剩余时间" << Wind << endl;
+					
+				if ( Boost )
+					cout << "\t聚宝:获得" << BoostRate << "倍经验\t剩余时间" << Boost << endl;
+					
+				cout << "  负面效果:";
+				
+				if ( Drug )
+					cout << "\t毒药:持续减少血量\t剩余时间" << Drug << endl;
+					
+				if ( Ice )
+					cout << "\t冰霜:奔跑变得缓慢\t剩余时间" << Ice << endl;
+					
+				cout << "\n  当前天赋：";
+				
+				if ( Ren == 1 )
+					cout << "\t小无敌";
+					
+				if ( Ren == 2 )
+					cout << "\t瞬跳";
+					
+				if ( Ren == 3 )
+					cout << "\t空之舞";
+					
+				if ( Ren == 4 )
+					cout << "\t三段跳";
+					
+				if ( Ren == 5 )
+					cout << "\t反重力跳跃";
 					
 				Setpos ( 4, 1 );
 				cout << "↑/↓ 跳跃/下翻，←→ 些微移动（松手即返回）";
