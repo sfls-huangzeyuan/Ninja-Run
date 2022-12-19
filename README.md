@@ -21,12 +21,12 @@ If you wanna write your own plugin , copy the [main.cpp](https://github.com/sfls
 ---
 ## Version 1.4.5-beta-25 , patch number 2064
 ### Done Ideas
-- [ ]  Starting Page **->Done**
-- [ ]  Data Reviser **->Done**
-- [ ]  Collision Box Detect **->Done**
-- [ ]  Attacking Balls **->Done**
-- [ ]  Bosses **->Done**(7/7)
-- [ ]  Endless Mode **->Done**
+- [x]  Starting Page **->Done**
+- [x]  Data Reviser **->Done**
+- [x]  Collision Box Detect **->Done**
+- [x]  Attacking Balls **->Done**
+- [x]  Bosses **->Done**(7/7)
+- [x]  Endless Mode **->Done**
 ### Undone Ideas
 1.  More Bosses **->Developing**
 2.  More Revisable Data **->Developing**
@@ -44,11 +44,11 @@ main.cpp:91,636 Bytes=4312 Lines=**89.4 Kilobytes**
 ---
 ## Version 1.2.13-beta-17 , patch number 1519
 ### Done Ideas
-- [ ]  Starting Page **->Done**
-- [ ]  Data Reviser **->Done**
-- [ ]  Collision Box Detect **->Done**
-- [ ]  Attacking Balls **->Done**
-- [ ]  Bosses **->Done**(7/7)
+- [x]  Starting Page **->Done**
+- [x]  Data Reviser **->Done**
+- [x]  Collision Box Detect **->Done**
+- [x]  Attacking Balls **->Done**
+- [x]  Bosses **->Done**(7/7)
 ### Undone Ideas
 1.  More Bosses **->Developing**
 2.  More Revisable Data **->Developing**
@@ -66,11 +66,11 @@ main.cpp:74,194 Bytes=3178 Lines=**7.24 Kilobytes**
 ---
 ## Version 1.0.12-beta-5 , patch number 1281
 ### Done Ideas
-- [ ]  Starting Page **->Done**
-- [ ]  Data Reviser **->Done**
-- [ ]  Collision Box Detect **->Done**
-- [ ]  Attacking Balls **->Done**
-- [ ]  Bosses **->Done**(7/7)
+- [x]  Starting Page **->Done**
+- [x]  Data Reviser **->Done**
+- [x]  Collision Box Detect **->Done**
+- [x]  Attacking Balls **->Done**
+- [x]  Bosses **->Done**(7/7)
 ### Undone Ideas
 1.  More Bosses **->Developing**
 2.  More Revisable Data **->Developing**
