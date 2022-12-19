@@ -19,6 +19,18 @@ If you just want to try it , view in [release](https://github.com/sfls-huangzeyu
 If you wanna write your own plugin , copy the [main.cpp](https://github.com/sfls-huangzeyuan/Ninga-Run/blob/main/main.cpp) and use [MinGW](https://sourceforge.net/projects/mingw/) to compile it.
 
 ---
+VERSION 2.0.0
+## Hi, friends reading this passage!
+**59 [commits](https://github.com/sfls-huangzeyuan/Ninja-Run/commits/main) had been commited before i write this .**
+**3 weeks past , and I finally decided that I should release the 2.x version**
+So, bye to the 1.x.x part!
+And take a look at what we've got on 2.0.0ver!
+
+1. Brand new [ELEMENT REACTION SYSTEM](https://github.com/sfls-huangzeyuan/Ninja-Run/discussions/4)!
+2. Re-Wrote talent system
+3. New Effect-Drug
+4. Improved printing system.
+---
 ## Version 1.4.5-beta-25 , patch number 2064
 ### Done Ideas
 - [x]  Starting Page **->Done**
