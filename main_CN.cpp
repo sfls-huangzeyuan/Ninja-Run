@@ -120,9 +120,10 @@ int Blomax, Ren, Exp, Expmax, Lvl, Ice, Drug, ar1, ar2, Tar1, Tar2, bl, br, Win,
     T, Tb, Sy, Up, Upt, Down, u1, u2, Kill, Killb, L, Ll[4], Li, D, Gd[10], Biao,
     Fire, Fir, Water, Thun, Wind, Magne, I[20][2], ib, Dis, Disb, Dis1, Disb1, Boss,
     Bblo, Bblomax, Bwhat1, Bwhat2, Bwhat3, Bgo1[10], Bgo2[10], Bgo3[10], Bbr, Bbl,
-    DrugRate = 40, Bl[4], Attack = 6, BloUp = 5, BloodRefillUp = 5, UnDead = 1, EffectLast = 250, ExpAddBlo = 0, Boost = 0, BoostRate = 2, BiaoAdd = 5, UnDeadLast = 1;
+    DrugRate = 40, Bl[4], Attack = 6, BloUp = 5, BloodRefillUp = 5, UnDead = 1, EffectLast = 250, ExpAddBlo = 0, Boost = 0, BoostRate = 2, BiaoAdd = 5, UnDeadLast = 1, BossDrug = 0;
+bool Attribute[6];
 float X, Y, Vx, Vy, Ding, Blo, Blo_Refill, Bx1, By1, Bx2, By2, Bx3, By3, Bvx1,
-      Bvy1, Bvx2, Bvy2, Bvx3, Bvy3, Bway[1001][2];
+      Bvy1, Bvx2, Bvy2, Bvx3, Bvy3, Bway[1001][2], ReviveRate = 0.5;
 long long HarmSum = 0;
 struct bullet
 {
@@ -192,14 +193,14 @@ void Reserve ( int a, float x, float y, int b )
 					Exp += 5, Biao += BiaoAdd;
 					
 				if ( B[b].what == -3 )
-					Fire = EffectLast, Ice = 0, Fir = 3;
+					Fire += EffectLast, Ice = 0, Fir = 3;
 					
 				if ( B[b].what == -4 )
-					Water = EffectLast;
+					Water += EffectLast;
 					
 				if ( B[b].what == -5 )
 				{
-					Wind = EffectLast / 3.5;
+					Wind += EffectLast / 3.5;
 					Ding = 28.25;
 					Ice = 0;
 					
@@ -218,7 +219,17 @@ void Reserve ( int a, float x, float y, int b )
 				
 				if ( B[b].what == -6 )
 				{
-					Thun = EffectLast;
+					Thun += EffectLast;
+					
+					if ( Wind )
+					{
+						Thun += Wind;
+						Wind = 0;
+					}
+					
+					if ( Water )
+						Thun += Water;
+						
 					system ( "color 1F" );
 					Sleep ( 20 );
 					system ( "color 6F" );
@@ -227,7 +238,7 @@ void Reserve ( int a, float x, float y, int b )
 				}
 				
 				if ( B[b].what == -7 )
-					Magne = EffectLast * 1.2;
+					Magne += EffectLast * 1.2;
 					
 				if ( B[b].what == -8 )
 					Ice = 0, Drug = 0, Blo = fmin ( ( float ) Blomax, Blo + 20 );
@@ -278,18 +289,34 @@ void Reserve ( int a, float x, float y, int b )
 						Thun += UnDeadLast;
 						Exp = max ( Exp - 5, 0 );
 					}
+					
+					else if ( Ren == 2 )
+						Blo += 10 * ReviveRate;
 				}
 				
 				if ( B[b].what == 14 )
 				{
-					Blo -= 15, Ice = EffectLast * 0.6, B[b].life = 0;
+					Blo -= 15;
+					Ice = EffectLast * 0.6;
+					B[b].life = 0;
 					HarmSum += 15;
+					Ice += Water;
+					Water = 0;
+					
+					if ( Fire )
+					{
+						Water += Ice;
+						Ice = 0;
+					}
 					
 					if ( Ren == 1 )
 					{
 						Thun += UnDeadLast;
 						Exp = max ( Exp - 5, 0 );
 					}
+					
+					else if ( Ren == 2 )
+						Blo += 10 * ReviveRate;
 				}
 				
 				else if ( B[b].what == 15 )
@@ -311,7 +338,7 @@ void Reserve ( int a, float x, float y, int b )
 					Blo -= 5;
 					srand ( time ( 0 ) );
 					
-					if ( rand() % 100 > DrugRate )
+					if ( rand() % 100 > DrugRate && !Water )
 						Drug = EffectLast * 0.3;
 						
 					B[b].life = 0;
@@ -322,6 +349,9 @@ void Reserve ( int a, float x, float y, int b )
 						Thun += UnDeadLast;
 						Exp = max ( Exp - 5, 0 );
 					}
+					
+					else if ( Ren == 2 )
+						Blo += 10 * ReviveRate;
 				}
 				
 				else if ( B[b].what >= 13 && B[b].what <= 17 )
@@ -335,6 +365,9 @@ void Reserve ( int a, float x, float y, int b )
 						Thun += UnDeadLast;
 						Exp = max ( Exp - 5, 0 );
 					}
+					
+					else if ( Ren == 2 )
+						Blo += 10 * ReviveRate;
 				}
 				
 				else
@@ -343,7 +376,7 @@ void Reserve ( int a, float x, float y, int b )
 					HarmSum += 15;
 					srand ( time ( 0 ) );
 					
-					if ( rand() % 100 > DrugRate )
+					if ( rand() % 100 > DrugRate && !Water )
 						Drug = EffectLast * 0.2;
 						
 					if ( Ren == 1 )
@@ -351,6 +384,9 @@ void Reserve ( int a, float x, float y, int b )
 						Thun += UnDeadLast;
 						Exp = max ( Exp - 5, 0 );
 					}
+					
+					else if ( Ren == 2 )
+						Blo += 10 * ReviveRate;
 				}
 				
 				B[b].kill = 1, Killb = 20;
@@ -370,7 +406,7 @@ void Reserve ( int a, float x, float y, int b )
 					HarmSum += 20;
 					srand ( time ( 0 ) );
 					
-					if ( rand() % 100 > DrugRate )
+					if ( rand() % 100 > DrugRate && !Water )
 						Drug = EffectLast * 0.3;
 						
 					if ( Ren == 1 )
@@ -378,6 +414,9 @@ void Reserve ( int a, float x, float y, int b )
 						Thun += UnDeadLast;
 						Exp = max ( Exp - 5, 0 );
 					}
+					
+					else if ( Ren == 2 )
+						Blo += 10 * ReviveRate;
 				}
 				
 				else if ( a == 8 )
@@ -390,6 +429,9 @@ void Reserve ( int a, float x, float y, int b )
 						Thun += UnDeadLast;
 						Exp = max ( Exp - 5, 0 );
 					}
+					
+					else if ( Ren == 2 )
+						Blo += 10 * ReviveRate;
 				}
 				
 				else
@@ -398,7 +440,7 @@ void Reserve ( int a, float x, float y, int b )
 					HarmSum += 15;
 					srand ( time ( 0 ) );
 					
-					if ( rand() % 100 > DrugRate )
+					if ( rand() % 100 > DrugRate && !Water )
 						Drug = EffectLast * 0.2;
 						
 					if ( Ren == 1 )
@@ -406,6 +448,9 @@ void Reserve ( int a, float x, float y, int b )
 						Thun += UnDeadLast;
 						Exp = max ( Exp - 5, 0 );
 					}
+					
+					else if ( Ren == 2 )
+						Blo += 10 * ReviveRate;
 				}
 				
 				B[b].kill = 1, Killb = 20;
@@ -446,7 +491,7 @@ void Reserve ( int a, float x, float y, int b )
 				Y -= 0.5;
 				srand ( time ( 0 ) );
 				
-				if ( rand() % 100 > DrugRate )
+				if ( rand() % 100 > DrugRate && !Water )
 					Drug = EffectLast * 0.3;
 					
 				break;
@@ -3578,13 +3623,16 @@ void Print ( int ball )
 				
 			if ( Boss == 1 )
 			{
-			
-				Chang1 if ( Boss == 2 )
-				{
+				Chang1
 				
-					Chang2 if ( Boss == 3 )
-						Chang3 system ( "color 9F" );
-				}
+				if ( Boss == 2 )
+				{
+					Chang2
+					system ( "color 9F" );
+					
+					if ( Boss == 3 )
+						Chang3
+					}
 			}
 			
 			Sleep ( 20 );
@@ -3611,13 +3659,13 @@ void Print ( int ball )
 		Setpos ( 10, 10 );
 		cout << "新天赋！";
 	Y:
-		int rr = rand() % 4 + 2;
+		int rr = rand() % 6 + 1;
 		Setpos ( 12, 10 );
 		
 		if ( rr == Ren )
 			goto Y;
 			
-		if ( Ren == 1 )
+		if ( rr == 1 )
 			cout << "小无敌";
 			
 		if ( rr == 2 )
@@ -3632,9 +3680,15 @@ void Print ( int ball )
 		if ( rr == 5 )
 			cout << "反重力跳跃";
 			
+		if ( rr == 6 )
+			cout << "战场精英";
+			
 		Setpos ( 14, 10 );
 		cout << "当前天赋：";
 		
+		if ( Ren == 1 )
+			cout << "小无敌";
+			
 		if ( Ren == 2 )
 			cout << "瞬跳";
 			
@@ -3646,6 +3700,9 @@ void Print ( int ball )
 			
 		if ( Ren == 5 )
 			cout << "反重力跳跃";
+			
+		if ( Ren == 6 )
+			cout << "战场精英";
 			
 		Setpos ( 16, 10 );
 		cout << "换否？（y/n）";
@@ -3911,7 +3968,7 @@ int main()
 	SetConsoleCursorInfo ( GetStdHandle ( STD_OUTPUT_HANDLE ), &cursor_info );
 	srand ( ( unsigned ) time ( NULL ) );
 	Win = 0;
-	Ren = rand() % 4 + 2;
+	Ren = 0;
 	Lvl = 1;
 	Blo = Blomax = 250;
 	Expmax = 300;
@@ -4172,6 +4229,9 @@ Start:
 					
 				if ( Ren == 5 )
 					cout << "\t反重力跳跃";
+					
+				if ( Ren == 6 )
+					cout << "战场精英";
 					
 				Setpos ( 4, 1 );
 				cout << "↑/↓ 跳跃/下翻，←→ 些微移动（松手即返回）";
