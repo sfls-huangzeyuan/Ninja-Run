@@ -120,7 +120,7 @@ int Blomax, Ren, Exp, Expmax, Lvl, Ice, Drug, ar1, ar2, Tar1, Tar2, bl, br, Win,
     T, Tb, Sy, Up, Upt, Down, u1, u2, Kill, Killb, L, Ll[4], Li, D, Gd[10], Biao,
     Fire, Fir, Water, Thun, Wind, Magne, I[20][2], ib, Dis, Disb, Dis1, Disb1, Boss,
     Bblo, Bblomax, Bwhat1, Bwhat2, Bwhat3, Bgo1[10], Bgo2[10], Bgo3[10], Bbr, Bbl,
-    Bl[4], Attack = 6, BloUp = 5, BloodRefillUp = 5, UnDead = 1, EffectLast = 250, ExpAddBlo = 0, Boost = 0, BoostRate = 2, BiaoAdd = 5, UnDeadLast = 1;
+    DrugRate = 40, Bl[4], Attack = 6, BloUp = 5, BloodRefillUp = 5, UnDead = 1, EffectLast = 250, ExpAddBlo = 0, Boost = 0, BoostRate = 2, BiaoAdd = 5, UnDeadLast = 1;
 float X, Y, Vx, Vy, Ding, Blo, Blo_Refill, Bx1, By1, Bx2, By2, Bx3, By3, Bvx1,
       Bvy1, Bvx2, Bvy2, Bvx3, Bvy3, Bway[1001][2];
 long long HarmSum = 0;
@@ -240,9 +240,8 @@ void Reserve ( int a, float x, float y, int b )
 				if ( B[b].life == 0 && b == bl )
 					bl++;
 					
-				if ( B[b].what == 29 )
-					Boost = EffectLast * 1.2;
-					
+				//				if ( B[b].what == 29 )
+				//					Boost = EffectLast * 1.2;
 				Map ( 3, b );
 				break;
 			}
@@ -283,7 +282,7 @@ void Reserve ( int a, float x, float y, int b )
 				
 				if ( B[b].what == 14 )
 				{
-					Blo -= 15, Ice = 100, B[b].life = 0;
+					Blo -= 15, Ice = EffectLast * 0.6, B[b].life = 0;
 					HarmSum += 15;
 					
 					if ( Ren == 1 )
@@ -310,7 +309,11 @@ void Reserve ( int a, float x, float y, int b )
 				else if ( B[b].what == 17 )
 				{
 					Blo -= 5;
-					Drug = 100;
+					srand ( time ( 0 ) );
+					
+					if ( rand() % 100 > DrugRate )
+						Drug = EffectLast * 0.3;
+						
 					B[b].life = 0;
 					HarmSum += 5;
 					
@@ -336,9 +339,13 @@ void Reserve ( int a, float x, float y, int b )
 				
 				else
 				{
-					Blo -= 15;
+					Blo -= 10;
 					HarmSum += 15;
+					srand ( time ( 0 ) );
 					
+					if ( rand() % 100 > DrugRate )
+						Drug = EffectLast * 0.2;
+						
 					if ( Ren == 1 )
 					{
 						Thun += UnDeadLast;
@@ -359,9 +366,13 @@ void Reserve ( int a, float x, float y, int b )
 			{
 				if ( a == 2 )
 				{
-					Blo -= 20;
+					Blo -= 10;
 					HarmSum += 20;
+					srand ( time ( 0 ) );
 					
+					if ( rand() % 100 > DrugRate )
+						Drug = EffectLast * 0.3;
+						
 					if ( Ren == 1 )
 					{
 						Thun += UnDeadLast;
@@ -383,9 +394,13 @@ void Reserve ( int a, float x, float y, int b )
 				
 				else
 				{
-					Blo -= 15;
+					Blo -= 10;
 					HarmSum += 15;
+					srand ( time ( 0 ) );
 					
+					if ( rand() % 100 > DrugRate )
+						Drug = EffectLast * 0.2;
+						
 					if ( Ren == 1 )
 					{
 						Thun += UnDeadLast;
@@ -429,6 +444,11 @@ void Reserve ( int a, float x, float y, int b )
 				Kill = 1;
 				Vy = -1;
 				Y -= 0.5;
+				srand ( time ( 0 ) );
+				
+				if ( rand() % 100 > DrugRate )
+					Drug = EffectLast * 0.3;
+					
 				break;
 			}
 		}
@@ -2059,7 +2079,7 @@ void Enemy_2 ( int R, int r )
 		B[br].life = 1;
 	}
 	
-	if ( R <= -2 && R >= -11 )
+	if ( R <= -2 && R >= -11 || R == 29 )
 	{
 		br++;
 		B[br].what = R;
@@ -3748,9 +3768,10 @@ void ChangeData()
 		     endl;
 		cout << "10.每轮飞镖数量:\t" << BiaoAdd << "\t\t" << ( n == 10 ? "*" : " " )  <<
 		     endl;
-		cout << "10.配置码输入:\t\t\t\t" << ( n == 11 ? "*" : " " )  << endl;
+		cout << "11.配置码输入:\t\t\t\t" << ( n == 11 ? "*" : " " )  << endl;
 		cout << "按下Tab修改,w和s切换,Esc显示配置码并退出" << endl;
 		char ch = getch();
+		ch = tolower ( ch );
 		
 		if ( ch == 'w' && n > 1 )
 			n--;
@@ -4101,11 +4122,10 @@ Start:
 			if ( g == ' ' )
 			{
 				Sleep ( 100 );
-				Setpos ( 30, 1 );
-				Setpos ( 30, 1 );
+				Setpos ( 29, 1 );
 				Sy++;
 				cout << "状态栏:\n";
-				cout << "  正面效果:";
+				cout << "  正面效果:\n";
 				
 				if ( Ren )
 					cout << "\t忍术:缓慢回复血量\n";
@@ -4128,7 +4148,7 @@ Start:
 				if ( Boost )
 					cout << "\t聚宝:获得" << BoostRate << "倍经验\t剩余时间" << Boost << endl;
 					
-				cout << "  负面效果:";
+				cout << "  负面效果:\n";
 				
 				if ( Drug )
 					cout << "\t毒药:持续减少血量\t剩余时间" << Drug << endl;
