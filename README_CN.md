@@ -16,7 +16,7 @@
 ## 正在寻求进一步的英语翻译
 
 ### 使用
-如果只是想试一下 , 你可以在 [release](https://github.com/sfls-huangzeyuan/Ninga-Run/releases/tag/Ver1.2-beta) 中找到可执行文件
+如果只是想试一下 , 你可以在 [release](https://github.com/sfls-huangzeyuan/Ninga-Run/releases/) 中找到可执行文件
 如果你想写自己的版本，可以复制[main.cpp](https://github.com/sfls-huangzeyuan/Ninga-Run/blob/main/main.cpp) 然后用 [MinGW](https://sourceforge.net/projects/mingw/)编译器编译。
 
 ---
