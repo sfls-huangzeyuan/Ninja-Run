@@ -118,9 +118,9 @@ void Color ( int a )
 }
 int Blomax, Ren, Exp, Expmax, Lvl, Ice, Drug, ar1, ar2, Tar1, Tar2, bl, br, Win,
     T, Tb, Sy, Up, Upt, Down, u1, u2, Kill, Killb, L, Ll[4], Li, D, Gd[10], Biao,
-    Fire, Fir, Water, Thun, Wind, Magne, I[20][2], ib, Dis, Disb, Dis1, Disb1, Boss,
+    Fire, FireballCount, Water, Thun, Wind, Magne, I[20][2], ib, Dis, Disb, Dis1, Disb1, Boss,
     Bblo, Bblomax, Bwhat1, Bwhat2, Bwhat3, Bgo1[10], Bgo2[10], Bgo3[10], Bbr, Bbl,
-    DrugRate = 40, Bl[4], Attack = 6, BloUp = 5, BloodRefillUp = 5, UnDead = 1, EffectLast = 250, ExpAddBlo = 0, Boost = 0, BoostRate = 2, BiaoAdd = 5, UnDeadLast = 1, BossDrug = 0;
+    DrugRate = 40, Bl[4], Attack = 6, BloUp = 5, BloodRefillUp = 5, UnDead = 1, EffectLast = 250, ExpAddBlo = 0, Boost = 0, BoostRate = 2, BiaoAdd = 5, UnDeadLast = 1, BossDrug = 0, MaxFireball = 3, OnFire = 0;
 bool Attribute[6];
 float X, Y, Vx, Vy, Ding, Blo, Blo_Refill, Bx1, By1, Bx2, By2, Bx3, By3, Bvx1,
       Bvy1, Bvx2, Bvy2, Bvx3, Bvy3, Bway[1001][2], ReviveRate = 0.5;
@@ -193,11 +193,19 @@ void Reserve ( int a, float x, float y, int b )
 					Exp += 5, Biao += BiaoAdd;
 					
 				if ( B[b].what == -3 )
-					Fire += EffectLast, Ice = 0, Fir = 3;
-					
+				{
+					Fire += EffectLast;
+					Ice = 0;
+					FireballCount = 3;
+				}
+				
 				if ( B[b].what == -4 )
+				{
 					Water += EffectLast;
-					
+					Water -= OnFire;
+					OnFire = 0;
+				}
+				
 				if ( B[b].what == -5 )
 				{
 					Wind += EffectLast / 3.5;
@@ -290,7 +298,7 @@ void Reserve ( int a, float x, float y, int b )
 						Exp = max ( Exp - 5, 0 );
 					}
 					
-					else if ( Ren == 2 )
+					else if ( Ren == 6 )
 						Blo += 10 * ReviveRate;
 				}
 				
@@ -303,10 +311,10 @@ void Reserve ( int a, float x, float y, int b )
 					Ice += Water;
 					Water = 0;
 					
-					if ( Fire )
+					if ( Fire || OnFire )
 					{
-						Water += Ice;
-						Ice = 0;
+						Water += min ( 5, Ice );
+						Ice = max ( 0, Ice - 5 );
 					}
 					
 					if ( Ren == 1 )
@@ -315,7 +323,7 @@ void Reserve ( int a, float x, float y, int b )
 						Exp = max ( Exp - 5, 0 );
 					}
 					
-					else if ( Ren == 2 )
+					else if ( Ren == 6 )
 						Blo += 10 * ReviveRate;
 				}
 				
@@ -350,7 +358,7 @@ void Reserve ( int a, float x, float y, int b )
 						Exp = max ( Exp - 5, 0 );
 					}
 					
-					else if ( Ren == 2 )
+					else if ( Ren == 6 )
 						Blo += 10 * ReviveRate;
 				}
 				
@@ -366,18 +374,18 @@ void Reserve ( int a, float x, float y, int b )
 						Exp = max ( Exp - 5, 0 );
 					}
 					
-					else if ( Ren == 2 )
+					else if ( Ren == 6 )
 						Blo += 10 * ReviveRate;
 				}
 				
 				else
 				{
-					Blo -= 10;
+					Blo -= 15;
 					HarmSum += 15;
 					srand ( time ( 0 ) );
 					
 					if ( rand() % 100 > DrugRate && !Water )
-						Drug = EffectLast * 0.2;
+						OnFire = EffectLast * 0.4;
 						
 					if ( Ren == 1 )
 					{
@@ -385,7 +393,7 @@ void Reserve ( int a, float x, float y, int b )
 						Exp = max ( Exp - 5, 0 );
 					}
 					
-					else if ( Ren == 2 )
+					else if ( Ren == 6 )
 						Blo += 10 * ReviveRate;
 				}
 				
@@ -415,7 +423,7 @@ void Reserve ( int a, float x, float y, int b )
 						Exp = max ( Exp - 5, 0 );
 					}
 					
-					else if ( Ren == 2 )
+					else if ( Ren == 6 )
 						Blo += 10 * ReviveRate;
 				}
 				
@@ -430,13 +438,13 @@ void Reserve ( int a, float x, float y, int b )
 						Exp = max ( Exp - 5, 0 );
 					}
 					
-					else if ( Ren == 2 )
+					else if ( Ren == 6 )
 						Blo += 10 * ReviveRate;
 				}
 				
 				else
 				{
-					Blo -= 10;
+					Blo -= 15;
 					HarmSum += 15;
 					srand ( time ( 0 ) );
 					
@@ -449,7 +457,7 @@ void Reserve ( int a, float x, float y, int b )
 						Exp = max ( Exp - 5, 0 );
 					}
 					
-					else if ( Ren == 2 )
+					else if ( Ren == 6 )
 						Blo += 10 * ReviveRate;
 				}
 				
@@ -764,8 +772,8 @@ void Map ( int a, int b )
 		if ( Ice != 0 )
 			Color ( 6 );
 			
-		if ( b == 1 )
-			Color ( 8 );
+		//if ( b == 1 )
+		//	Color ( 8 );
 			
 		if ( Li != 0 )
 			Color ( 5 );
@@ -969,13 +977,13 @@ void Map ( int a, int b )
 			else
 				Color ( 5 );
 				
-			if ( Fir >= 1 )
+			if ( FireballCount >= 1 )
 				Setpos ( X, Y + 1 ), cout << "●";
 				
-			if ( Fir >= 2 )
+			if ( FireballCount >= 2 )
 				Setpos ( X + 1, Y ), cout << "●";
 				
-			if ( Fir >= 3 )
+			if ( FireballCount >= 3 )
 				Setpos ( X - 1, Y - 1 ), cout << "●";
 		}
 	}
@@ -1111,7 +1119,7 @@ void Map ( int a, int b )
 			{
 				B[b].y -= B[b].vy;
 				Setpos ( B[b].x, fmax ( ( float ) 0, B[b].y - 8 ) );
-				Color ( 6 );
+				Color ( 2 );
 				
 				for ( int i = max ( 0, ( int ) B[b].y - 8 ); i <= B[b].y; i++ )
 					cout << "═";
@@ -3486,10 +3494,10 @@ void Print ( int ball )
 {
 	if ( ball == 1 )
 	{
-		if ( Fir < 3 && T % 8 == 0 )
-			Fir++;
+		if ( FireballCount < MaxFireball && T % 8 == 0 )
+			FireballCount++;
 			
-		if ( Fir > 0 )
+		if ( FireballCount > 0 )
 		{
 			br++;
 			B[br].what = -13;
@@ -3498,16 +3506,16 @@ void Print ( int ball )
 			B[br].life = 1;
 			
 			if ( Dis <= 30 )
-				B[br].a = Disb, B[Disb].a = 1, Fir--;
+				B[br].a = Disb, B[Disb].a = 1, FireballCount--;
 				
 			else if ( Boss != 0 )
-				B[br].a = 13880086, Fir--;
+				B[br].a = 13880086, FireballCount--;
 				
 			else if ( Dis != 13880087 )
-				B[br].a = Disb, B[Disb].a = 1, Fir--;
+				B[br].a = Disb, B[Disb].a = 1, FireballCount--;
 				
 			else if ( Dis1 != 13880087 )
-				B[br].a = Disb1, B[Disb1].a = 1, Fir--;
+				B[br].a = Disb1, B[Disb1].a = 1, FireballCount--;
 				
 			else
 				B[br].life = 0;
@@ -3945,14 +3953,16 @@ void ChangeData()
     return endless;
     }*/
 bool endless;
-int hour = 0, minu = 0, sec = 0;
-int cnt = 0;
-string name;
+#define THUNDER 1
+#define FIRE 2
+#define WATER 3
+#define WIND 4
+#define BOOST 5
 int main()
 {
 	//	foutlog.open ( "user_log.txt", ios::out | ios::app );
 	//	foutlog << "\n\n" << "LOG-IN TIME UNIX:" << time ( 0 );
-	system ( "mode con cols=60 lines=37" );
+	system ( "mode con cols=60 lines=40" );
 	/*  cout << "\t\t\tPls Enter Your Name:>>>";
 	    cin >> name;
 	    string str = "/data/user/" + name + "/Memory_Slot.milestone";
@@ -4213,6 +4223,9 @@ Start:
 				if ( Ice )
 					cout << "\t冰霜:奔跑变得缓慢\t剩余时间" << Ice << endl;
 					
+				if ( OnFire )
+					cout << "\t着火:无法恢复血量\t剩余时间" << OnFire << endl;
+					
 				cout << "\n  当前天赋：";
 				
 				if ( Ren == 1 )
@@ -4304,7 +4317,7 @@ Start:
 		if ( Sy == 1 )
 			Setpos ( 4, 1 ), printf ( "                           " ), Sy--;
 			
-		if ( Drug == 0 )
+		if ( Drug == 0 && OnFire == 0 )
 			Blo = fmin ( ( float ) Blomax, Blo + Blo_Refill / 100.0 );
 			
 		else if ( T % 10 == 0 )
@@ -4324,6 +4337,9 @@ Start:
 			
 		if ( Magne > 0 )
 			Magne--;
+			
+		if ( OnFire > 0 )
+			OnFire--;
 			
 		if ( Fire > 0 )
 			Print ( 1 ), Fire--;
