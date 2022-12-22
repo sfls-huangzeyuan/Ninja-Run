@@ -658,6 +658,7 @@ void Reserve ( int a, float x, float y, int b )
 			}
 		}
 	}
+	if ( Blo < 0 ) Blo = 0;
 }
 void Map ( int a, int b )
 {
