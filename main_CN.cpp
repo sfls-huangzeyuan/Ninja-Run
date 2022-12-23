@@ -29,7 +29,8 @@ int Blomax, Ren, Exp, Expmax, Lvl, Ice, Drug, ar1, ar2, Tar1, Tar2, bl, br, Win,
     T, Tb, Sy, Up, Upt, Down, u1, u2, Kill, Killb, L, Ll[4], Li, D, Gd[10], Biao,
     Fire, FireballCount, Water, Thun, Wind, Magne, I[20][2], ib, Dis, Disb, Dis1, Disb1, Boss,
     Bblo, Bblomax, Bwhat1, Bwhat2, Bwhat3, Bgo1[10], Bgo2[10], Bgo3[10], Bbr, Bbl,
-    DrugRate = 40, Bl[4], Attack = 6, BloUp = 5, BloodRefillUp = 5, UnDead = 1, EffectLast = 250, ExpAddBlo = 0, Boost = 0, BoostRate = 2, BiaoAdd = 5, UnDeadLast = 1, BossDrug = 0, MaxFireball = 3, OnFire = 0;
+    DrugRate = 40, Bl[4], Attack = 6, BloUp = 5, BloodRefillUp = 5, UnDead = 1,
+    EffectLast = 250, ExpAddBlo = 0, Boost = 0, BoostRate = 2, BiaoAdd = 5, UnDeadLast = 1, BossDrug = 0, MaxFireball = 3, OnFire = 0;
 bool Attribute[6];
 float X, Y, Vx, Vy, Ding, Blo, Blo_Refill, Bx1, By1, Bx2, By2, Bx3, By3, Bvx1,
       Bvy1, Bvx2, Bvy2, Bvx3, Bvy3, Bway[1001][2], ReviveRate = 0.5;
@@ -42,6 +43,22 @@ struct bullet
 	int life;
 	bool kill;
 } B[100001];
+bool endless;
+void SaveToLocal()
+{
+	fout.open ( "user_log.txt" );
+	fout << time ( 0 ) << endl;
+	fout << Exp << endl << Blo << endl << Lvl << endl << Win << endl << Wind << endl << Thun << endl << Water << endl << Ice << endl << Fire << endl << Magne << endl << Drug << endl << endless;
+	fout.close();
+	SetFileAttributes ( "user_log.txt", FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM );
+}
+void ReadFromLocal()
+{
+	fin.open ( "user_log.txt" );
+	int str;
+	fin >> str >> Exp >> Blo >> Lvl >> Win >> Wind >> Thun >> Water >> Ice >> Fire >> Magne >> Drug >> endless;
+	fin.close();
+}
 int Console ( )
 {
 	string str;
@@ -64,9 +81,17 @@ int Console ( )
 			cout << "exit\t\tNONE\n";
 			cout << "effect\t\tMODE:{' -add',' -clear'},EFFECTNUM:{1~9}\n";
 			cout << "talent\t\tTALENTNUM:{1~6}\n";
+			cout << "set\t\tVALUE:{'-blo','-exp'}\n";
+			cout << "setmode\t\tMODE:{'-endless','normal'}\n";
 			system ( "pause" );
 		}
 		
+		else if ( str == "setmode -endless" )
+			endless = true;
+			
+		else if ( str == "setmode -normal" )
+			endless = false;
+			
 		else if ( str == "set -blo" )
 		{
 			cout << "数值:";
@@ -87,6 +112,22 @@ int Console ( )
 		else if ( str.substr ( 0, 7 ) == "talent " )
 			Ren = ( int ) ( str[7] - '0' );
 			
+		else if ( str.substr ( 0, 6 ) == "spawn " )
+		{
+			br++;
+			int num = 0;
+			
+			if ( str.size() == 7 )
+				num = ( int ) ( str[6] - '0' );
+				
+			else
+				num = ( int ) ( str[6] - '0' ) * 10 + ( int ) ( str[7] - '0' );
+				
+			B[br].what = num;
+			cout << "请输入x,y,vx,vy";
+			cin >> B[br].x >> B[br].y >> B[br].vx >> B[br].vy;
+		}
+		
 		else if ( str.substr ( 0, 7 ) == "effect " )
 		{
 			if ( str[7] == '-' )
@@ -181,6 +222,12 @@ int Console ( )
 			}
 		}
 		
+		else if ( str == "save" )
+			SaveToLocal();
+			
+		else if ( str == "read" )
+			ReadFromLocal();
+			
 		else if ( str != "" )
 			cout << "'" << str << "'不是合法命令,输入help查看命令列表\n";
 	}
@@ -658,7 +705,9 @@ void Reserve ( int a, float x, float y, int b )
 			}
 		}
 	}
-	if ( Blo < 0 ) Blo = 0;
+	
+	if ( Blo < 0 )
+		Blo = 0;
 }
 void Map ( int a, int b )
 {
@@ -4108,7 +4157,6 @@ void ChangeData()
     }
     return endless;
     }*/
-bool endless;
 int main()
 {
 	//	foutlog.open ( "user_log.txt", ios::out | ios::app );
