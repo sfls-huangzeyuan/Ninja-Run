@@ -1,63 +1,83 @@
-#include<bits/stdc++.h>
-#include<windows.h>
-#include<stdio.h>
-#include<conio.h>
-#include<time.h>
-#ifdef WIN32
-	#include <shlobj.h>
-#endif
-#define Nor if(B[b].x<5) B[b].x=5;
-#define Out1 Bx1-Bvx1<=6||Bx1-Bvx1>=28||By1-Bvy1<=7||By1-Bvy1>=27
-#define Out2 Bx2-Bvx2<=6||Bx2-Bvx2>=28||By2-Bvy2<=7||By2-Bvy2>=27
-#define Chang1 {Bwhat1=0;Bvx1=Bvy1=0;memset(Bgo1,0,sizeof(Bgo1));}
-#define Chang2 {Bwhat2=0;Bvx2=Bvy2=0;memset(Bgo2,0,sizeof(Bgo2));}
-#define Chang3 {Bwhat3=0;Bvx3=Bvy3=0;memset(Bgo3,0,sizeof(Bgo3));}
+#include"ninja_run_header.h"
 using namespace std;
-ifstream fin;
-ofstream fout;
-ofstream foutlog;
-#define THUNDER 1
-#define FIRE 2
-#define WATER 3
-#define WIND 4
-#define BOOST 5
-#define MAGNE 6
-#define ONFIRE 7
-#define DRUG 8
-#define ICE 9
-int Blomax, Ren, Exp, Expmax, Lvl, Ice, Drug, ar1, ar2, Tar1, Tar2, bl, br, Win,
-    T, Tb, Sy, Up, Upt, Down, u1, u2, Kill, Killb, L, Ll[4], Li, D, Gd[10], Biao,
-    Fire, FireballCount, Water, Thun, Wind, Magne, I[20][2], ib, Dis, Disb, Dis1, Disb1, Boss,
-    Bblo, Bblomax, Bwhat1, Bwhat2, Bwhat3, Bgo1[10], Bgo2[10], Bgo3[10], Bbr, Bbl,
-    DrugRate = 40, Bl[4], Attack = 6, BloUp = 5, BloodRefillUp = 5, UnDead = 1,
-    EffectLast = 250, ExpAddBlo = 0, Boost = 0, BoostRate = 2, BiaoAdd = 5, UnDeadLast = 1, BossDrug = 0, MaxFireball = 3, OnFire = 0;
-bool Attribute[6];
-float X, Y, Vx, Vy, Ding, Blo, Blo_Refill, Bx1, By1, Bx2, By2, Bx3, By3, Bvx1,
-      Bvy1, Bvx2, Bvy2, Bvx3, Bvy3, Bway[1001][2], ReviveRate = 0.5;
-long long HarmSum = 0;
-struct bullet
+void Init_Shop()
 {
-	float x, y, vx, vy;
-	int what;
-	int a, t, How;
-	int life;
-	bool kill;
-} B[100001];
-bool endless;
+	fin_.open ( "skill_init.txt" );
+	
+	for ( int i = 1; i <= 5; i++ )
+		fin_ >> SkillName[i] >> CD[i] >> Price[i] >> Time[i];
+		
+	return;
+}
+void Shop()
+{
+	Init_Shop();
+	system ( "cls" );
+	
+	while ( true )
+	{
+		cout << "Shop" << endl;
+		cout << "Coin left:" << Coin << endl;
+		cout << "\n\n技能:\n";
+		
+		for ( int i = 1; i <= 5; i++ )
+			cout << i << ":" << "\t" << SkillName[i]
+			     << ":\n\t\tCD:\t\t" << CD[i]
+			     << "\n\t\tPrice:\t\t" << Price[i]
+			     << "\n\t\tDuration Time:\t" << Time[i]
+			     << endl;
+			     
+		char c;
+		c = getch();
+		int ch = ( int ) ( c - '0' );
+		getch();
+		
+		if ( ch >= 1 && ch <= 5 )
+		{
+			cout << "\nDo you want to buy " << SkillName[ch] << "\nY:Confirm N:Cancel";
+			char tmp = getch();
+			tmp = tolower ( tmp );
+			
+			if ( tmp == 'y' )
+			{
+				if ( Coin >= Price[ch] )
+				{
+					cout << "\nBought:" << SkillName[ch];
+					Skill = ch;
+					getch();
+					cout << "\nPress to Continue\n";
+				}
+				
+				else
+					cout << "\nNot Enough Coin!\n";
+			}
+		}
+		
+		else if ( ch == 0 )
+			return;
+			
+		system ( "cls" );
+	}
+	
+	return;
+}
 void SaveToLocal()
 {
+	SetFileAttributes ( "user_log.txt", FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM );
 	fout.open ( "user_log.txt" );
 	fout << time ( 0 ) << endl;
-	fout << Exp << endl << Blo << endl << Lvl << endl << Win << endl << Wind << endl << Thun << endl << Water << endl << Ice << endl << Fire << endl << Magne << endl << Drug << endl << endless;
+	fout << Exp << endl << Blo << endl << Lvl << endl << Win << endl << Wind << endl << Thun << endl << Water << endl << Ice << endl << Fire << endl << Magne << endl << Drug << endl << endless << endl << Coin;
 	fout.close();
-	SetFileAttributes ( "user_log.txt", FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM );
+	SetFileAttributes ( "user_log.txt", FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_READONLY );
 }
 void ReadFromLocal()
 {
+	SetFileAttributes ( "user_log.txt", FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM );
 	fin.open ( "user_log.txt" );
 	int str;
-	fin >> str >> Exp >> Blo >> Lvl >> Win >> Wind >> Thun >> Water >> Ice >> Fire >> Magne >> Drug >> endless;
+	fin >> str >> Exp >> Blo >> Lvl >> Win >> Wind >> Thun >> Water >> Ice >> Fire >> Magne >> Drug >> endless >> Coin;
 	fin.close();
+	SetFileAttributes ( "user_log.txt", FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_READONLY );
 }
 int Console ( )
 {
@@ -82,7 +102,7 @@ int Console ( )
 			cout << "effect\t\tMODE:{' -add',' -clear'},EFFECTNUM:{1~9}\n";
 			cout << "talent\t\tTALENTNUM:{1~6}\n";
 			cout << "set\t\tVALUE:{'-blo','-exp'}\n";
-			cout << "setmode\t\tMODE:{'-endless','normal'}\n";
+			cout << "setmode\t\tMODE:{'-endless','-normal'}\n";
 			system ( "pause" );
 		}
 		
@@ -4429,6 +4449,9 @@ Start:
 				if ( OnFire )
 					cout << "\t着火:无法恢复血量\t剩余时间" << OnFire << endl;
 					
+				if ( SkillUsing )
+					cout << "\t技能使用中\t剩余时间" << SkillUsing;
+					
 				cout << "\n  当前天赋：";
 				
 				if ( Ren == 1 )
@@ -4544,6 +4567,30 @@ Start:
 		if ( OnFire > 0 )
 			OnFire--;
 			
+		if ( SkillUsing > 0 )
+		{
+			if ( Skill == 2 )
+				Drug = 0;
+		}
+		
+		if ( SkillUsing > 1 )
+		{
+			SkillCD = 0;
+			SkillUsing--;
+		}
+		
+		if ( SkillUsing == 1 )
+		{
+			SkillUsing--;
+			SkillCD = CD[Skill];
+		}
+		
+		if ( SkillCD > 0 )
+			SkillCD--;
+			
+		if ( SkillCD == 0 && Skill >= 3 )
+			SkillUsing += 100;
+			
 		if ( Fire > 0 )
 			Print ( 1 ), Fire--;
 			
@@ -4620,6 +4667,7 @@ Start:
 		
 		Color ( 0 );
 		Setpos ( 1, 9 ), cout << "攻击: " << 16 + Lvl* Attack << "  ";
+		Coin = ( Lvl * Expmax + Exp * ( Win + 1 ) ) * 0.5;
 		Setpos ( 2, 1 );
 		Exp = min ( Exp, Expmax );
 		
